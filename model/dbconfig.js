@@ -1,7 +1,7 @@
 const config= {
     host:'localhost',
     port:3306,
-    username:'root',
+    user:'root',
     password:'root',
     database:'short-rent'
 }
