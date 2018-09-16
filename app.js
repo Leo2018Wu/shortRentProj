@@ -7,7 +7,10 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
+const userorderdis = require('./routes/userorderdis')
+const order = require('./routes/order')
+const discount =require('./routes/discount')
+
 
 // error handler
 onerror(app)
@@ -23,7 +26,9 @@ app.use(require('koa-static')(__dirname + '/public'))
 app.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
-
+//app.use(views(__dirname + '/views', {
+//   map: {html:'ejs'}
+// }))
 // logger
 app.use(async (ctx, next) => {
   const start = new Date()
@@ -34,7 +39,10 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(userorderdis.routes(),userorderdis.allowedMethods())
+app.use(order.routes(), order.allowedMethods())
+app.use(discount.routes(),discount.allowedMethods())
+
 
 // error-handling
 app.on('error', (err, ctx) => {
