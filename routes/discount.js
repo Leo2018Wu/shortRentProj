@@ -1,11 +1,14 @@
 const router =require('koa-router')()
-const discountController =require('../controllers/discountController');
+const discountDAO = require('../model/discountDAO');
 router.prefix('/discount')
-router.post('/',async (ctx,next)=>{
-    let query = ctx.request.body;
-    let jasonData = discountController.discount(query,next)
-    console.log('第一步传数据');
-    console.log(query);
+router.get('/:disId',async (ctx,next)=>{
+    try {
+        let jasondata = await discountDAO.userdiscount(ctx.params.disId);
+        ctx.body = {"code": 200, "message":'ok',data:jasondata};
+    }
+    catch (err) {
+        ctx.body = {"code": 500, "message": '执行失败', data: []}
+    }
 
 })
 module.exports = router

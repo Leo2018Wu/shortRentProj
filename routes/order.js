@@ -1,31 +1,54 @@
 const router =require('koa-router')()
 const orderController = require('../controllers/orderController');
+const orderDAO = require('../model/orderDAO');
 router.prefix('/order')
 //用户添加订单
 router.post('/',async (ctx,next)=>{
-    let query = ctx.request.body;
-    let jsondata = orderController.userorder(query,next)
-    console.log('第一步传数据');
-    console.log(query);
-
+    orderController.userorder(ctx,next)
 })
-router.post('/getoneorder',async (ctx,next)=>{
-    let query = ctx.request.body;
-    let jsondata = orderController.getOneorder(query,next)
-    console.log('第一步传数据');
-    console.log(query);
+//用户获取指定的订单
+router.get('/getoneorder/:oId',async (ctx,next)=>{
+    try {
+        let jasondata = await orderDAO.getOneorder(ctx.params.oId);
+        ctx.body = {"code": 200, "message":'ok',data:jasondata}
+        return;
+    }
+    catch (err) {
+        ctx.body = {"code": 500, "message": '执行失败', data: []}
+    }
 })
-router.post('/getallorder',async (ctx,next)=>{
-    let query = ctx.request.body;
-    let jsondata = orderController.getallorder(query,next)
-    console.log('第一步传数据');
-    console.log(query);
+//用户获取所有订单
+router.get('/getallorder/:uId',async (ctx,next)=>{
+    try {
+        let jasondata = await orderDAO.getOrders(ctx.params.uId);
+        ctx.body = {"code": 200, "message":'ok',data:jasondata}
+        return;
+    }
+    catch (err) {
+        ctx.body = {"code": 500, "message": '执行失败', data: []}
+    }
 })
-router.post('/delorder',async (ctx,next)=>{
-    let query = ctx.request.body;
-    let jsondata = orderController.delorder(query,next)
-    console.log('第一步传数据');
-    console.log(query);
+//用户删除指定订单
+router.get('/delorder/:oId',async (ctx,next)=>{
+    try {
+        let jasondata = await orderDAO.delOrder(ctx.params.oId);
+        ctx.body = {"code": 200, "message":'ok',data:jasondata}
+        return;
+    }
+    catch (err) {
+        ctx.body = {"code": 500, "message": '执行失败', data: []}
+    }
+})
+//用户删除所有订单
+router.get('/delallorder/:uId',async (ctx,next)=>{
+    try {
+        let jasondata = await orderDAO.delallOrder(ctx.params.uId);
+        ctx.body = {"code": 200, "message":'ok',data:jasondata}
+        return;
+    }
+    catch (err) {
+        ctx.body = {"code": 500, "message": '执行失败', data: []}
+    }
 })
 module.exports = router
 
