@@ -12,9 +12,8 @@ class DB {
 
     //用户完善信息
     userperfect(perfect) {
-        console.log(perfect)
-        return DAO('update user set uName = ?,uLocation = ?,uEmail = ?,uHeadPic = ?,uTrueName = ?,uPossPort = ?,uBirth = ?,uRegisterTime = ?,uCardId = ? where uPhone =?',
-            [perfect.uName,perfect.uLocation, perfect.uEmail, perfect.uHeadPic,perfect.uTrueName,perfect.uPossPort,perfect.uBirth,perfect.uRegisterTime,perfect.uCardId,perfect.uPhone ]);
+        return DAO('update user set uName = ?,uLocation = ?,uEmail = ?,uHeadPic = ?,uTrueName = ?,uPossPort = ?,uBirth = ?,uRegisterTime = ?,uSex = ?,uCardId = ? where uPhone =?',
+            [perfect.uName,perfect.uLocation, perfect.uEmail, perfect.uHeadPic,perfect.uTrueName,perfect.uPossPort,perfect.uBirth,perfect.uRegisterTime,perfect.uSex,perfect.uCardId,perfect.uPhone ]);
     //    用户性别无法更新，uSex
     }
 

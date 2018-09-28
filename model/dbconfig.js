@@ -3,7 +3,6 @@ const config= {
     port:3306,
     user:'root',
     password:'root',
-    database:'short-rents'
-    // database:'short-rents1.0'
+    database:'short-rents1.0'
 }
 module.exports=config;
