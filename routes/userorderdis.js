@@ -1,11 +1,10 @@
 const router = require('koa-router')();
 const userController = require('../controllers/registerController');
-const usersaveController = require('../controllers/usersaveController');
 const changepwdController = require('../controllers/changepwdController');
 router.prefix('/userorderdis');
 //用户注册
 router.post('/register',async (ctx,next)=>{
-     await userController.userregister(ctx,next);
+   await userController.userregister(ctx,next);
 })
 //用户登录
 router.post('/login',async (ctx,next)=>{

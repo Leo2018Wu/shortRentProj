@@ -1,70 +1,89 @@
-var userDAO = require('../model/userorderdisDAO')
+const userDAO = require('../model/userorderdisDAO');
+var formidable = require('formidable');
+var fs =require('fs');
+var path = require('path');
+const crypto = require('crypto');
 module.exports = {
-    userregister: async (query, next) => {
+    userregister: async (ctx,next) => {
+        let query = ctx.request.body;
+        //密码加密
+        const hash = crypto.createHash('md5');
+        hash.update(ctx.request.body.upwd)
+        let upwd = hash.digest('hex');
+
         let register = {};
         register.uPhone = query.uphone;
         register.uInviteCode = query.uinvitecode;
         register.uId = query.uid;
-        register.uPwd = query.upwd;
+        register.uPwd = upwd;
         register.uName = query.uname;
-        console.log('第二步传数据')
-        console.log(register);
         try {
-            await userDAO.userregister(register)
-            ctx.body = ('注册成功');
-            return;
+            await userDAO.userregister(register);
+            ctx.body = {'code': 200, 'message': 'ok', data: register};
         }
         catch (err) {
-            ctx.body = {"code": 500, "message": err.toString(), data: []}
+            ctx.body = {"code": 500, "message": '执行失败', data: []}
         }
     },
-    userlogin: async (query, next) => {
-        let login = {};
-        login.uId = query.uid;
-        login.uPwd = query.upwd;
-        login.uName = query.uname;
-        login.uPhone = query.uphone;
-        login.uInviteCode = query.uinvitecode;
-        console.log('第二步传数据')
-        console.log(login);
-        try {
-            await userDAO.userlogin(login);
-            ctx.body = ('登录成功');
-            console.log('用户登录成功')
-            return;
-        }
-        catch (err) {
-            ctx.body = {"code": 500, "message": err.toString(), data: []}
-        }
+    userperfect: async (ctx, next)=>{
+        var form = new formidable.IncomingForm();
+        form.parse(ctx.req, function (err, fields, files) {
+            var src = files.uheadPic.path;
+            var des = path.join(__dirname, '../', 'public/uploadfile', path.basename(src) + '.jpg');
+            fs.copyFile(src, des, function () {
+                console.log('文件复制成功');
+                var perfect = {}
+                perfect.uName = fields.uname;
+                perfect.uHeadPic =des;
+                perfect.uEmail = fields.uemail;
+                perfect.uTrueName = fields.utrueName;
+                perfect.uCardId = fields.ucardid;
+                perfect.uPossPort = fields.upossPort;
+                perfect.uSex = fields.usex;
+                perfect.uBirth = fields.ubirth;
+                perfect.uLocation = fields.ulocation;
+                perfect.uRegisterTime = fields.uregistertime;
+                perfect.uPhone = fields.uphone;
+                // //无邀请码，这里通过用户名id来匹配用户，进而改信息
+                console.log(perfect);
+                try {
+                    userDAO.userperfect(perfect);
+                    ctx.body = {"code": 200, "message": '完善信息成功'};
+                }
+                catch (err) {
+                    ctx.body = {"code": 500, "message": '执行失败', data: []}
+                }
+            });
+        })
+        ctx.body = {"code": 200, "message": '完善信息成功'}
     },
-    userperfect: async (query,next) => {
-        let perfect = {};
-        perfect.uId = query.uid;
-        perfect.uPhone = query.uphone;
-        perfect.uPwd = query.upwd;
-        perfect.uName = query.uname;
-        perfect.uHeadPic = query.uheadPic;
-        perfect.uEmail = query.uemail;
-        perfect.uTrueName = query.utrueName;
-        perfect.uCardId = query.ucardid;
-        perfect.uPossPort = query.upossPort;
-        perfect.uSex = query.usex;
-        perfect.uBirth = query.ubirth;
-        perfect.uLocation = query.ulocation;
-        perfect.uRegisterTime = query.uregistertime;
-        //无邀请码，这里通过用户名id来匹配用户，进而改信息
-        console.log('第二步传数据');
-        console.log(perfect);
+    userlogin: async (ctx, next) => {
         try {
-            await userDAO.userperfect(perfect);
-            ctx.body = ('用户信息完善成功');
-            return;
-        }
-        catch (err) {
-            ctx.body = {"code": 500, "message": err.toString(), data: []}
+            let uphone = ctx.request.body.uphone;
+
+            //密码加密
+            const hash = crypto.createHash('md5');
+            hash.update(ctx.request.body.upwd)
+            let upwd = hash.digest('hex');
+
+            console.log(upwd);
+            let login = await userDAO.userlogin();
+            let result = false;
+            for (let i = 0;i < login.length;i++) {
+                if (upwd == login[i].uPwd && uphone == login[i].uPhone) {
+                    result = true;
+                    ctx.body = {'code': 200, 'message': '登录成功', "data": result}
+                    return;
+                } else {
+                    ctx.body = {'code': 200, 'message': '登录失败', "data":result};
+                    result = false;
+                }
+            }
+        }catch (err) {
+            ctx.body = {"code": 500, "message": '服务器错误', err}
         }
     }
-}
+};
 
 
 
