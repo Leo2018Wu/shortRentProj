@@ -4,7 +4,8 @@ const orderDAO = require('../model/orderDAO');
 router.prefix('/order')
 //用户添加订单
 router.post('/',async (ctx,next)=>{
-    orderController.userorder(ctx,next)
+     orderController.userorder(ctx,next);
+    ctx.body = {"code": 200, "message":'ok',data:ctx.request.body}
 })
 //用户获取指定的订单
 router.get('/getoneorder/:oId',async (ctx,next)=>{
