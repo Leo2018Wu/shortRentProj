@@ -89,6 +89,26 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+
+    addAssessments:async (ctx,next) => {
+        //1.收集数据
+        let jsonData = await diarysDAO.getDDiarys(ctx.params.dId)
+        let assessments = { };
+        assessments.daId = ctx.request.body.daId
+        assessments.daDate = new Date()
+        assessments.daContent = ctx.request.body.daContent
+        assessments.dId = jsonData[0].dId
+
+        try{
+            //2.调用用户数据访问对象的添加方法
+            await diarysDAO.addAssessments(assessments)
+            //3.反馈结果
+            ctx.body = {"code":200,"message":"ok",data:assessments}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+
     deleteAssessments:async (ctx,next) => {
         //1.收集数据
         let id =ctx.params.daId
