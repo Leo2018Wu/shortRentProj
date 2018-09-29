@@ -14,6 +14,7 @@ const order = require('./routes/order')
 const discount =require('./routes/discount')
 const admin = require('./routes/admin')
 const diarys =require('./routes/diarys')
+const house=require('.routes/house')
 
 // error handler
 onerror(app)
@@ -59,6 +60,7 @@ app.use(order.routes(), order.allowedMethods())
 app.use(discount.routes(),discount.allowedMethods())
 app.use(admin.routes(), admin.allowedMethods())
 app.use(diarys.routes(),diarys.allowedMethods())
+app.use(house.routes(), house.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
