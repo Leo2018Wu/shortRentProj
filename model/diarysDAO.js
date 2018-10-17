@@ -20,8 +20,8 @@ class DB{
     }
     //添加一个日记的信息方法
     addDiarys(diary){
-        return DAO('insert into diary values(?,?,?,?,?,?,?,?,?)',
-            [diary.dId,diary.arrvialDate,diary.dContent,diary.dDate,diary.recommend,diary.uId,diary.hId,diary.dTitle,diary.dThumbs])
+        return DAO('insert into diary values(?,?,?,?,?,?,?,?,?,?)',
+            [diary.dId,diary.arrvialDate,diary.dContent,diary.dDate,diary.recommend,diary.uId,diary.hId,diary.dTitle,diary.dThumbs,diary.dImages])
     }
     //删除一个日记的信息方法
     deleteDiarys(id){

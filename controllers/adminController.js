@@ -8,7 +8,7 @@ module.exports = {
         try {
             let login = await adminDAO.adminlogin();
             for(let i=0;i<login.length;i++){
-                if(query.adminPwd == login[i].adminPwd && query.adminId == login[i].adminId) {
+                if(query.adminPwd == login[i].adminPwd && query.adminName == login[i].adminName) {
                     ctx.body = {'code': 200, 'message': '登录成功', data:query};
                 }else{
                     ctx.body = {"code": 500, "message": '登录失败', data: []}
@@ -46,13 +46,16 @@ module.exports = {
             house.hPrice = fields.hPrice
             house.hCity =fields.hCity
             house.hLocation =fields.hLocation
+            house.hSave = fields.hSave
             house.hBeds = fields.hBeds
             house.hLimitPr =fields.hLimitPr
             house.Thumbs = fields.Thumbs
             house.hScore = fields.hScore
-            house.hSave = fields.hSave
+            house.hState = fields.hState
             house.hArrivalDate = fields.hArrivalDate
             house.hLeaveDate = fields.hLeaveDate
+            house.hDiaryNo = fields.hDiaryNo
+            house.hAssessmentNo = fields.hAssessmentNo
             console.log(house)
             //2.调用用户数据访问对象的添加方法
             adminDAO.addhouses(house)
@@ -112,13 +115,16 @@ module.exports = {
         house.hPrice = ctx.request.body.hPrice
         house.hCity = ctx.request.body.hCity
         house.hLocation = ctx.request.body.hLocation
+        house.hSave = fields.hSave
         house.hBeds = ctx.request.body.hBeds
         house.hLimitPr = ctx.request.body.hLimitPr
         house.hThumbs = ctx.request.body.hThumbs
         house.hScore = ctx.request.body.hScore
-        house.hSave = ctx.request.body.hSave
-        house.hArrivalDate = ctx.request.body.hArrivalDate
-        house.hLeaveDate = ctx.request.body.hLeaveDate
+        house.hState = fields.hState
+        house.hArrivalDate = fields.hArrivalDate
+        house.hLeaveDate = fields.hLeaveDate
+        house.hDiaryNo = fields.hDiaryNo
+        house.hAssessmentNo = fields.hAssessmentNo
 
         console.log(house)
         try {

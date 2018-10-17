@@ -4,14 +4,14 @@ const DAO = require('../model/DAO')
 class DB{
     //管理员登录
    adminlogin() {
-        return DAO('select adminId,adminPwd from admin',[]);
+        return DAO('select adminName,adminPwd from admin',[]);
     }
 
     //房源操作
     //添加房源信息
     addhouses(house){
-        return DAO('insert into house values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-            [house.hId,house.hName,house.hPic1,house.hPic2,house.hPic3,house.hPic4,house.hInfo,house.insideInfo,house.trafficInfo,house.surroundInfo,house.hType,house.hfacilily,house.hPrice,house.hCity,house.hLocation,house.hBeds,house.hLimitPr,house.hThumbs,house.hScore,house.hSave,house.hArrivalDate,house.hLeaveDate ])
+        return DAO('insert into house values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+            [house.hId,house.hName,house.hPic1,house.hPic2,house.hPic3,house.hPic4,house.hInfo,house.insideInfo,house.trafficInfo,house.surroundInfo,house.hType,house.hfacilily,house.hPrice,house.hCity,house.hLocation,house.hSave,house.hBeds,house.hLimitPr,house.hThumbs,house.hScore,house.hState,house.hArrivalDate,house.hLeaveDate,house.hDiaryNo,house.hAssessmentNo ])
     }
     //获取全部房源信息
     gethouses(id){
@@ -23,8 +23,8 @@ class DB{
     }
     //更新房源信息
     updatehouses(house){
-        return DAO('update house set hName = ?,hPic1 = ?,hPic2 = ?,hPic3 = ?,hPic4 = ?,hInfo = ?,insideInfo = ?,trafficInfo = ?,surroundInfo = ?,hType = ?,hfacilily = ?,hPrice = ?,hCity = ?,hLocation = ?,hBeds = ?,hLimitPr = ?,hThumbs = ?,hScore = ?,hSave = ? ,hArrivalDate = ?,hLeaveDate=?',
-            [house.hName,house.hPic1,house.hPic2,house.hPic3,house.hPic4,house.hInfo,house.insideInfo,house.trafficInfo,house.surroundInfo,house.hType,house.hfacilily,house.hPrice,house.hCity,house.hLocation,house.hBeds,house.hLimitPr,house.hThumbs,house.hScore,house.hSave,house.hArrivalDate,house.hLeaveDate])
+        return DAO('update house set hName = ?,hPic1 = ?,hPic2 = ?,hPic3 = ?,hPic4 = ?,hInfo = ?,insideInfo = ?,trafficInfo = ?,surroundInfo = ?,hType = ?,hfacilily = ?,hPrice = ?,hCity = ?,hLocation = ?,hSave = ? ,hBeds = ?,hLimitPr = ?,hThumbs = ?,hScore = ?,hState = ?,hArrivalDate = ?,hLeaveDate=?,hDiaryNo =?,hAssessmentNo =?'
+            [house.hName,house.hPic1,house.hPic2,house.hPic3,house.hPic4,house.hInfo,house.insideInfo,house.trafficInfo,house.surroundInfo,house.hType,house.hfacilily,house.hPrice,house.hCity,house.hLocation,house.hSave,house.hBeds,house.hLimitPr,house.hThumbs,house.hScore,house.hState,house.hArrivalDate,house.hLeaveDate,house.hDiaryNo,house.hAssessmentNo])
     }
     //删除房源信息
     deletehouses(id){

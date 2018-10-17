@@ -57,6 +57,7 @@ module.exports = {
         diarys.hId = jsonData[0].hId
         diarys.dTitle = ctx.request.body.dTitle
         diarys.dThumbs= ctx.request.body.dThumbs
+        diarys.dImages= ctx.request.body.dImages
         console.log(diarys);
         try{
             //2.调用用户数据访问对象的添加方法
