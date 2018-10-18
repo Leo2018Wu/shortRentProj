@@ -14,7 +14,6 @@ module.exports = {
         let register = {};
         register.uPhone = query.uphone;
         register.uInviteCode = query.uinvitecode;
-        register.uId = query.uid;
         register.uPwd = upwd;
         register.uName = query.uname;
         try {
