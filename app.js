@@ -14,9 +14,9 @@ const order = require('./routes/order')
 const discount =require('./routes/discount')
 const admin = require('./routes/admin')
 const diarys =require('./routes/diarys')
-const house=require('.routes/house')
-const assessment=require('.routes/assessment')
-const reply=require('.routes/reply')
+const house=require('./routes/house')
+const assessment=require('./routes/assessment')
+const reply=require('./routes/reply')
 
 // error handler
 onerror(app)
