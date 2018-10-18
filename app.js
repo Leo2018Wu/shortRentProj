@@ -12,7 +12,11 @@ const index = require('./routes/index')
 const userorderdis = require('./routes/userorderdis')
 const order = require('./routes/order')
 const discount =require('./routes/discount')
-
+const admin = require('./routes/admin')
+const diarys =require('./routes/diarys')
+const house=require('./routes/house')
+const assessment=require('./routes/assessment')
+const reply=require('./routes/reply')
 
 // error handler
 onerror(app)
@@ -56,7 +60,11 @@ app.use(index.routes(), index.allowedMethods())
 app.use(userorderdis.routes(),userorderdis.allowedMethods())
 app.use(order.routes(), order.allowedMethods())
 app.use(discount.routes(),discount.allowedMethods())
-
+app.use(admin.routes(), admin.allowedMethods())
+app.use(diarys.routes(),diarys.allowedMethods())
+app.use(house.routes(), house.allowedMethods())
+app.use(assessment.routes(), assessment.allowedMethods())
+app.use(reply.routes(), reply.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
