@@ -11,6 +11,15 @@ router.get('/details/reply/:aId',async (ctx,next)=>{
         ctx.body = {"code":500,"message":err.toString(),data:[]}
     }
 }),
+//    获取所有回复信息
+    router.get('/details/allreply',async (ctx,next)=>{
+        try{
+            let jsondata = await replyDAO.getallReply();
+            ctx.body = {"code":200,"message":"ok",data:jsondata}
+        }catch (err) {
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    }),
 //添加回复：在房源详情页面里面添加回复(差不多ok)
     router.post('/details/addReply/:aId',async (ctx,next)=>{
         await replyControl.addReply(ctx,next)

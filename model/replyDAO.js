@@ -10,6 +10,10 @@ class Reply {
         return DAO('insert into reply(reply.rContent,reply.rDate,reply.aId) values(?,?,?)',
             [reply.rContent,reply.rDate,reply.aId]);
     }
+    //获取所有回复信息
+    getallReply(){
+        return DAO('select * from reply');
+    }
 //删除回复
     delReply(id){
         return DAO('delete from reply where rId = ?',[id]);

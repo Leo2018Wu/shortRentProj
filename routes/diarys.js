@@ -14,7 +14,7 @@ router.get('/:recommend',async (ctx,next)=>{
  router.get('/hdiarys/:hId',async (ctx,next)=>{
      await diarysCtroller.getHDiarys(ctx,next)
 })
-//查询用户所写日记
+//查询指定用户所写日记
 router.get('/udiarys/:uId',async (ctx,next)=>{
     await diarysCtroller.getUDiarys(ctx,next)
 })

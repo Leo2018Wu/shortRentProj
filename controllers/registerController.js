@@ -81,7 +81,17 @@ module.exports = {
         }catch (err) {
             ctx.body = {"code": 500, "message": '服务器错误', err}
         }
-    }
+    },
+    //查询指定用户信息
+    getUserInfo: async (ctx, next) => {
+        try{
+            let jsonData = await userDAO.getUserInfo(ctx.params.uId)
+            //3.反馈结果
+            ctx.body = {"code":200,"message":"ok",data:jsonData}
+        }catch(err){
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
 };
 
 

@@ -6,7 +6,7 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
-// const cors = require('koa2-cors')
+const cors = require('koa2-cors')
 
 const index = require('./routes/index')
 const userorderdis = require('./routes/userorderdis')
@@ -17,6 +17,8 @@ const diarys =require('./routes/diarys')
 const house=require('./routes/house')
 const assessment=require('./routes/assessment')
 const reply=require('./routes/reply')
+const occupant=require('./routes/occupant')
+const save=require('./routes/save')
 
 // error handler
 onerror(app)
@@ -32,27 +34,24 @@ app.use(require('koa-static')(__dirname + '/public'))
 app.use(views(__dirname + '/views', {
   extension: 'pug'
 }))
-//app.use(views(__dirname + '/views', {
-//   map: {html:'ejs'}
-// }))
-// logger
+
 app.use(async (ctx, next) => {
   const start = new Date()
   await next()
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
-//跨域请求
-// app.use(cors({
-//     origin: function (ctx) {
-//         return 'http://localhost:63342'; //这样就能只允许 http://localhost:63342 这个域名的请求了
-//     },
-//     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-//     maxAge: 5,
-//     credentials: true,
-//     allowMethods: ['GET', 'POST', 'DELETE'],
-//     allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
-// }))
+
+app.use(cors({
+    origin: function (ctx) {
+        return 'http://localhost:8080'; //这样就能只允许 http://localhost:63342 这个域名的请求了
+    },
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    maxAge: 5,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}))
 
 
 // routes
@@ -65,7 +64,8 @@ app.use(diarys.routes(),diarys.allowedMethods())
 app.use(house.routes(), house.allowedMethods())
 app.use(assessment.routes(), assessment.allowedMethods())
 app.use(reply.routes(), reply.allowedMethods())
-
+app.use(occupant.routes(), occupant.allowedMethods())
+app.use(save.routes(), save.allowedMethods())
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
