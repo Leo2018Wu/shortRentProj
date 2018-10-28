@@ -1,7 +1,7 @@
 var changepwdDAO = require('../model/changepwdDAO');
 const crypto = require('crypto');
 module.exports = {
-    userchangpwd : async (ctx,next)=>{
+    idchangpwd : async (ctx,next)=>{
         let query =ctx.request.body;
         //密码加密
         const hash = crypto.createHash('md5');
@@ -10,12 +10,12 @@ module.exports = {
         console.log(upwd);
 
         let changpwd = {};
-        changpwd.uPhone = query.uphone;
+        // changpwd.uPhone = query.uphone;
         changpwd.uPwd= upwd;
         changpwd.uId =query.uid;
         //用户更改密码通过id匹配到指定的用户
         try {
-            await changepwdDAO.userchangepwd(changpwd)
+            await changepwdDAO.idchangpwd(changpwd)
             ctx.body = {"code": 200, "message":'ok',data:changpwd};
         }
         catch (err) {

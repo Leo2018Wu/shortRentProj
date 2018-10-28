@@ -6,16 +6,31 @@ class DB {
             [register.uPhone,register.uInviteCode,register.uId, register.uPwd, register.uName]);
     }
     //用户登录
-    userlogin() {
-        return DAO('select uPwd,uPhone from user',[]);
+    userlogin(uPhone) {
+        return DAO('select * from user where uPhone = ?', [uPhone]);
     }
 
-    //用户完善信息
+        //用户完善基本信息
     userperfect(perfect) {
-        return DAO('update user set uName = ?,uLocation = ?,uEmail = ?,uHeadPic = ?,uTrueName = ?,uPossPort = ?,uBirth = ?,uRegisterTime = ?,uSex = ?,uCardId = ? where uPhone =?',
-            [perfect.uName,perfect.uLocation, perfect.uEmail, perfect.uHeadPic,perfect.uTrueName,perfect.uPossPort,perfect.uBirth,perfect.uRegisterTime,perfect.uSex,perfect.uCardId,perfect.uPhone ]);
-    //    用户性别无法更新，uSex
+        return DAO('update `user` set uName = ?,uPhone =?,uEmail =? where uId =?',
+            [perfect.uName,perfect.uPhone,perfect.uEmail,perfect.uId]);
     }
+    //用户完善身份信息
+    updateIdInfo(info){
+        return DAO('update `user` set uTrueName = ?,uCardId = ?,uSex = ? where uId = ?',
+            [info.uTrueName,info.uCardId,info.uSex,info.uId])
+    }
+    // //用户修改密码
+    // updatePwd(pwd){
+    //     return DAO('update `user` set uPwd = ?,where uId = ? ',
+    //         [pwd.uPwd,pwd.uId]);
+    // }
+    //用户上传头像
+    updatePhoto(photo){
+        return DAO('update `user` set uHeadPic = ? where uId = ? ',
+            [photo.uHeadPic,photo.uId]);
+    }
+
     //查询指定用户信息
     getUserInfo(id){
         return DAO('SELECT * FROM `user` WHERE uId = ? ',[id]);

@@ -23,8 +23,8 @@ class Assessment {
     }
 //添加房源评论；用户添加某个房源评价信息(ok）
     addAssessment(assessment){
-        return DAO('insert into assessment(assessment.arrvialDate,assessment.aContent,assessment.aDate,assessment.aScore,assessment.uId,assessment.oId,assessment.hId,assessment.aImages) values(?,?,?,?,?,?,?,?)',
-            [assessment.arrvialDate,assessment.aContent,assessment.aDate,assessment.aScore,assessment.uId,assessment.oId,assessment.hId,assessment.aImages]);
+        return DAO('insert into assessment values(?,?,?,?,?,?,?,?,?,?)',
+            [assessment.aId,assessment.arrvialDate,assessment.aContent,assessment.aDate,assessment.aScore,assessment.uId,assessment.oId,assessment.hId,assessment.aImages,assessment.aCommend]);
     }
 //查找订单表中的信息：
     getOneOrder(id){

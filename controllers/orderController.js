@@ -21,6 +21,17 @@ module.exports = {
             ctx.body = {"code": 500, "message": '执行失败', data: []}
         }
     },
+    //修改订单状态
+    updateorder: async (ctx,next)=>{
+        let query =ctx.request.body;
+          let order ={};
+          order.oId= query.oId;
+           order.oStatus= query.oStatus;
+        let jsondata = await orderDAO.updateorder(order);
+        ctx.set('content-type', 'application/json');
+        ctx.body = {"code": 200, "message": "OK", data: jsondata}
+        },
+    //
 }
 
 

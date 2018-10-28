@@ -23,9 +23,8 @@ router.get('/ddiarys/:dId',async (ctx,next)=>{
     await diarysCtroller.getDDiarys(ctx,next)
 })
 //添加日记
-router.post('/orders/add/:oId',async (ctx,next)=>{
+router.post('/orders/add',async (ctx,next)=>{
     await diarysCtroller.addDiarys(ctx,next)
-    console.log('添加成功')
 })
 //删除日记
 router.get('/delete/:dId',async (ctx,next)=>{
@@ -35,6 +34,10 @@ router.get('/delete/:dId',async (ctx,next)=>{
 //根据日记编号显示日记评论
 router.get('/ddiarys/Assessments/:dId',async (ctx,next)=>{
     await diarysCtroller.getAssessments(ctx,next)
+})
+//根据日记编号显示日记评论和评论人情况
+router.get('/ddiarys/getUandAssessments/:dId',async (ctx,next)=>{
+    await diarysCtroller.getUandAssessments(ctx,next)
 })
 //添加日记评论
 router.post('/ddiarys/addAssessments/:dId',async (ctx,next)=>{

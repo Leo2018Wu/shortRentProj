@@ -20,8 +20,8 @@ class DB{
     }
     //添加一个日记的信息方法
     addDiarys(diary){
-        return DAO('insert into diary values(?,?,?,?,?,?,?,?,?,?)',
-            [diary.dId,diary.arrvialDate,diary.dContent,diary.dDate,diary.recommend,diary.uId,diary.hId,diary.dTitle,diary.dThumbs,diary.dImages])
+        return DAO('insert into diary values(?,?,?,?,?,?,?,?,?,?,?)',
+            [diary.dId,diary.arrvialDate,diary.dContent,diary.dDate,diary.recommend,diary.uId,diary.hId,diary.dTitle,diary.dThumbs,diary.dImages,diary.oId])
     }
     //删除一个日记的信息方法
     deleteDiarys(id){
@@ -35,6 +35,10 @@ class DB{
     //根据日记编号显示日记评论查看
     getAssessments(id){
         return DAO('select * from diaryassessment where dId = ?',[id])
+    }
+    //根据日记编号和用户编号显示日记评论查看
+    getUandAssessments(dId){
+        return DAO('select `user`.uName,`user`.uHeadPic,daDate,daContent FROM `user`,diaryassessment WHERE `user`.uId = diaryassessment.uId and diaryassessment.dId = ?',[dId])
     }
     //删除一个日记评论信息方法
     deleteAssessments(id){

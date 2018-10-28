@@ -12,8 +12,8 @@ class DB{
     }
     //添加入住人
     addOccupant(occupant){
-        return DAO('insert into occupant values(?,?,?,?,?,?)',
-            [occupant.occId,occupant.occName,occupant.occCordId,occupant.occBirthDate,occupant.occPhone,occupant.uId])
+        return DAO('insert into occupant values(?,?,?,?,?)',
+            [occupant.occId,occupant.occName,occupant.occCordId,occupant.occPhone,occupant.uId])
     }
 }
 module.exports = new DB();

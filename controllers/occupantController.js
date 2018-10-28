@@ -2,11 +2,10 @@ var occupantDAO = require('../model/occupantDAO')
 module.exports = {
     addOccupant: async (ctx, next) => {
         //1.收集数据
-            let occupant = {};
+        let occupant = {};
         occupant.occId =ctx.request.body.occId
         occupant.occName = ctx.request.body.occName
         occupant.occCordId = ctx.request.body.occCordId
-        occupant.occBirthDate = ctx.request.body.occBirthDate
         occupant.occPhone = ctx.request.body.occPhone
         // occupant.disId = ctx.request.body.disId
         occupant.uId = ctx.request.body.uId

@@ -24,7 +24,7 @@ router.get('/details/assessment/:hId',async (ctx,next)=>{
     }),
 
 //添加评论：在房源详情页面里面添加评论（ok）
-    router.post('/details/addAssessment/:oId',async (ctx,next)=>{
+    router.post('/details/addAssessment',async (ctx,next)=>{
         await assessmentControl.addAssessment(ctx,next)
     }),
 //删除评论：在房源详情页面里面删除评论
