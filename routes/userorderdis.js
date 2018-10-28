@@ -49,6 +49,10 @@ router.post('/updatePhoto',async (ctx,next)=> {
 router.post('/perfect/idchangpwd',async (ctx,next)=>{
     await changepwdController.idchangpwd(ctx,next);
 })
+//用户更改密码
+router.post('/perfect/password',async (ctx,next)=>{
+    await changepwdController.userchangpwd(ctx,next);
+})
 
 //查询指定用户详细信息
 router.get('/getUserInfos/:uId',async (ctx,next)=>{
