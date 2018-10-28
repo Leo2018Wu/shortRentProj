@@ -3,11 +3,15 @@ const DAO = require('../model/DAO');
 class Assessment {
 //按房源显示：显示某个房源评价信息（ok）（入住时间）
     getHouseAssessment(id){
-        return DAO('select * from assessment where assessment.hId= ? ',[id]);
+        return DAO('select * from assessment,user where assessment.uId = user.uId and assessment.hId= ? ',[id]);
+    }
+    //推荐的评价
+    getRecommendAssessment(id){
+        return DAO(' select * from assessment,user where user.uId = assessment.uId and assessment.recommend = ?',[id]);
     }
 //按用户显示：显示某个用户的评价信息（ok）
     getUserAssessment(id){
-        return DAO('select * from assessment  where assessment.uId= ? ',[id]);
+        return DAO('select * from assessment,user,house where house.hId = assessment.hId and user.uId = assessment.uId and assessment.uId= ? ',[id]);
     }
 //添加房源评论；用户添加某个房源评价信息(ok）
     addAssessment(assessment){

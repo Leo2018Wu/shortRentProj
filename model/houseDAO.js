@@ -29,7 +29,7 @@ class DB{
     }
     //2.首页的按风格分类推送房源信息只需显示房屋图片
     styleHouse(){
-        return DAO('select hPic1 from house WHERE hThumbs in(SELECT max(hThumbs) from house group by hType)',[])
+        return DAO('select * from house WHERE hThumbs in(SELECT max(hThumbs) from house group by hType)',[])
     }
     //3.输入房名，位置，房屋风格，交通情况关键字模糊查询
     keyWordHouse(keyName,keyLoca,keyStyle,keyTra){

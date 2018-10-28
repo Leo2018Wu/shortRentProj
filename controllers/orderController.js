@@ -1,21 +1,22 @@
 var orderDAO = require('../model/orderDAO');
 module.exports = {
-    //用户添加订单
+    //1024修改添加订单和入住人：用户添加订单
     userorder: async (ctx,next)=>{
         let query =ctx.request.body;
-        let order ={};
-        order.oId= query.oid;
-        order.arrvialDate= query.arrvialdate;
-        order.leaveDate= query.leavedate;
-        order.hPrice= query.hprice;
-        order.oDate= query.odate;
-        order.oStatus= query.ostatus;
-        order.hId= query.hid;
-        order.uId= query.uid;
-        order.disId= query.disid;
+        let orderoccupant ={};
+        orderoccupant.arrvialDate= query.arrvialDate;
+        orderoccupant.leaveDate= query.leaveDate;
+        orderoccupant.hPrice= query.hPrice;
+        orderoccupant.oDate= query.oDate;
+        orderoccupant.oStatus= query.oStatus;
+        orderoccupant.uId= query.uId;
+        orderoccupant.hId= query.hId;
+        orderoccupant.occName= query.occName;
+        orderoccupant.occCordId= query.occCordId;
+        orderoccupant.occPhone= query.occPhone;
         try {
-            await orderDAO.addOrder(order);
-            ctx.body = {"code": 200, "message":'ok',data:order}
+            await orderDAO.addOrder(orderoccupant);
+            ctx.body = {"code": 200, "message":'ok',data:orderoccupant}
         }
         catch (err) {
             ctx.body = {"code": 500, "message": '执行失败', data: []}

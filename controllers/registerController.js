@@ -14,7 +14,6 @@ module.exports = {
         let register = {};
         register.uPhone = query.uphone;
         register.uInviteCode = query.uinvitecode;
-        register.uId = query.uid;
         register.uPwd = upwd;
         register.uName = query.uname;
         try {
@@ -58,31 +57,66 @@ module.exports = {
         ctx.body = {"code": 200, "message": '完善信息成功'}
     },
     userlogin: async (ctx, next) => {
-        try {
-            let uphone = ctx.request.body.uphone;
-
-            //密码加密
+            let query = ctx.request.body;
+            let user = {};
+            //加密
             const hash = crypto.createHash('md5');
-            hash.update(ctx.request.body.upwd)
+            hash.update(query.uPwd)
             let upwd = hash.digest('hex');
 
-            console.log(upwd);
-            let login = await userDAO.userlogin();
-            let result = false;
-            for (let i = 0;i < login.length;i++) {
-                if (upwd == login[i].uPwd && uphone == login[i].uPhone) {
-                    result = true;
-                    ctx.body = {'code': 200, 'message': '登录成功', "data": result}
-                    return;
+            user.uPhone = query.uPhone;
+            user.uPwd = upwd;
+            try {
+                //获取传回的手机号和密码
+                let jsondata = await userDAO.userlogin(user.uPhone);
+                console.log(jsondata);
+                if (jsondata.length == 0) {
+                    ctx.body = {
+                        code: 500,
+                        message: '用户不存在'
+                    }
+                } else if (jsondata[0].uPwd == user.uPwd) {
+                    ctx.body = {"code": 200, "message": "登录成功！", data: jsondata[0]}
+                    //用户登录成功，将信息保存在cookie中
+                    ctx.cookies.set('user', jsondata[0])
+
                 } else {
-                    ctx.body = {'code': 200, 'message': '登录失败', "data":result};
-                    result = false;
+                    ctx.body = {"code": 403, "message": '用户不存在或密码错误', data: []}
                 }
             }
-        }catch (err) {
-            ctx.body = {"code": 500, "message": '服务器错误', err}
-        }
-    }
+            catch
+                (err)
+            {
+                ctx.body = {"code": 500, "message": err.toString(), data: []}
+            }
+        // try {
+        //     let uphone = ctx.request.body.uphone;
+        //
+        //     //密码加密
+        //     const hash = crypto.createHash('md5');
+        //     hash.update(ctx.request.body.upwd)
+        //     let upwd = hash.digest('hex');
+        //
+        //     console.log(upwd);
+        //     let login = await userDAO.userlogin();
+        //     let result = false;
+        //     let user = {}
+        //     for (let i = 0;i < login.length;i++) {
+        //         if (upwd == login[i].uPwd && uphone == login[i].uPhone) {
+        //             result = true;
+        //             ctx.body = {'code': 200, 'message': '登录成功', "data": result}
+        //             ctx.cookies.set('user', jsondata[0])
+        //             return;
+        //         } else {
+        //             ctx.body = {'code': 403, 'message': '登录失败', "data":result};
+        //             result = false;
+        //         }
+        //     }
+        // }catch (err) {
+        //     ctx.body = {"code": 500, "message": '服务器错误', err}
+        // }
+        //用户登录
+        },
 };
 
 

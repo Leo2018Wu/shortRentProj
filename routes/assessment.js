@@ -11,7 +11,17 @@ router.get('/details/assessment/:hId',async (ctx,next)=>{
     }catch (err) {
         ctx.body = {"code":500,"message":err.toString(),data:[]}
     }
-}),
+}),    //查询推荐的评价
+    router.get('/details/recommend/:aCommend',async (ctx,next)=>{
+        try{
+            let jsondata = await assessmentDAO.getRecommendAssessment(ctx.params.aCommend);
+            console.log(jsondata)
+            ctx.body = {"code":200,"message":"ok",data:jsondata}
+        }catch (err) {
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    }),
+
 //添加评论：在房源详情页面里面添加评论（ok）
     router.post('/details/addAssessment/:oId',async (ctx,next)=>{
         await assessmentControl.addAssessment(ctx,next)

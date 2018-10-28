@@ -13,21 +13,17 @@ module.exports = {
                 console.log('文件复制成功！');
             })
             let jsondata = await assessmentDAO.getOneOrder(ctx.params.oId);
-            // console.log(ctx.params.oId);
-            // console.log(jsondata[0].oId);
-            // console.log(jsondata[0].arrvialDate);
-            // console.log(jsondata[0].uId);
-            // console.log(jsondata[0].hId);
             //1,收集数据(可能存在问题)
             let assessment = { };
             assessment.arrvialDate= jsondata[0].arrvialDate;
             assessment.aContent = fields.aContent;
             assessment.aDate = new Date();
             assessment.aScore = fields.aScore;
-            assessment.uId = jsondata[0].uId
+            assessment.uId = jsondata[0].uId;
             assessment.oId = jsondata[0].oId;
             assessment.hId = jsondata[0].hId;
             assessment.aImages = des;
+            // assessment.recommend = ctx.request.body.recommend
             await assessmentDAO.addAssessment(assessment);
         })
         try{
@@ -37,7 +33,6 @@ module.exports = {
         }
     },
     delAssessment:async (ctx,next)=>{
-        //1，收集数据
         try{
             let jsondata = await assessmentDAO.delAssessment(ctx.params.aId);
             ctx.body = {"code":200,"message":"ok",data:jsondata}
