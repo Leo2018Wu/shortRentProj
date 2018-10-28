@@ -5,7 +5,7 @@ router.prefix('/house')
 //根据传入城市名字显示房屋信息
 router.post('/',async (ctx,next)=>{
     //实现跨域允许，第二个参数代表可以跨域请求的源，*代表接受所有不同来源的请求
-    ctx.set("Access-Control-Allow-Origin","http://localhost:3180")
+    ctx.set("Access-Control-Allow-Origin","http://localhost:8080")
     //await起到了then的作用，用于处理异步回调方法执行的后续工作
     await houseController.locationHouse(ctx,next)
     // await ctx.render('house',{data:jsondata})

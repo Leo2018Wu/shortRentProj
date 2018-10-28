@@ -4,8 +4,19 @@ const orderDAO = require('../model/orderDAO');
 router.prefix('/order')
 //用户添加订单
 router.post('/',async (ctx,next)=>{
-     orderController.userorder(ctx,next);
-    ctx.body = {"code": 200, "message":'ok',data:ctx.request.body}
+     let jsondata = orderController.userorder(ctx,next);
+    ctx.body = {"code": 200, "message":'ok',data:jsondata}
+})
+//获取订单表中oId最大的订单号
+router.get('/getmaxorder',async (ctx,next)=>{
+    try {
+        let jasondata = await orderDAO.getMaxOrder();
+        ctx.body = {"code": 200, "message":'ok',data:jasondata}
+        return;
+    }
+    catch (err) {
+        ctx.body = {"code": 500, "message": '执行失败', data: []}
+    }
 })
 //用户获取指定的订单
 router.get('/getoneorder/:oId',async (ctx,next)=>{

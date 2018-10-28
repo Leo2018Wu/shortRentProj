@@ -2,15 +2,20 @@ const DAO = require('../model/DAO')
 class DB {
     //用户注册
     userregister(register) {
-        return DAO('insert into user(uPhone,uInviteCode,uId,uPwd,uName) VALUES(?,?,?,?,?)',
-            [register.uPhone,register.uInviteCode,register.uId, register.uPwd, register.uName]);
+        return DAO('insert into user(uPhone,uInviteCode,uPwd,uName) VALUES(?,?,?,?)',
+            [register.uPhone,register.uInviteCode,register.uPwd, register.uName]);
     }
     //用户登录
     userlogin(uPhone) {
-        return DAO('select * from user where uPhone = ?', [uPhone]);
+        return DAO('select * from user where uPhone = ?',[uPhone]);
     }
 
         //用户完善基本信息
+    //获取所有的手机号
+    getallphone(uPhone) {
+        return DAO('select uPhone from user where uPhone = ?',[uPhone]);
+    }
+    //用户完善信息
     userperfect(perfect) {
         return DAO('update `user` set uName = ?,uPhone =?,uEmail =? where uId =?',
             [perfect.uName,perfect.uPhone,perfect.uEmail,perfect.uId]);

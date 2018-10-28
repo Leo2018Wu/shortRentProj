@@ -11,11 +11,10 @@ router.get('/details/assessment/:hId',async (ctx,next)=>{
     }catch (err) {
         ctx.body = {"code":500,"message":err.toString(),data:[]}
     }
-}),
-    //查询推荐的评价
-    router.get('/details/recommend/:recommend',async (ctx,next)=>{
+}),    //查询推荐的评价
+    router.get('/details/recommend/:aCommend',async (ctx,next)=>{
         try{
-            let jsondata = await assessmentDAO.getRecommendAssessment(ctx.params.recommend);
+            let jsondata = await assessmentDAO.getRecommendAssessment(ctx.params.aCommend);
             console.log(jsondata)
             ctx.body = {"code":200,"message":"ok",data:jsondata}
         }catch (err) {
@@ -40,22 +39,13 @@ router.get('/personal/userAssessment/:uId',async (ctx,next)=>{
         ctx.body = {"code":500,"message":err.toString(),data:[]}
     }
 })
-// 获取所有评论信息
-router.get('/personal/allAssessment',async (ctx,next)=>{
-    try{
-        let jsondata = await assessmentDAO.getallAssessment();
-        ctx.body = {"code":200,"message":"ok",data:jsondata}
-    }catch (err) {
-        ctx.body = {"code":500,"message":err.toString(),data:[]}
-    }
-})
-//获取用户，评论，回复所有信息
-router.get('/allinfo',async (ctx,next)=>{
-    try{
-        let jsondata = await assessmentDAO.getallinfo();
-        ctx.body = {"code":200,"message":"ok",data:jsondata}
-    }catch (err) {
-        ctx.body = {"code":500,"message":err.toString(),data:[]}
-    }
-})
+// 获取用户的订单号
+// router.get('/personal/userOrder/:oId',async (ctx,next)=>{
+//     try{
+//         let jsondata = await assessmentDAO.getOneOrder(ctx.params.oId);
+//         ctx.body = {"code":200,"message":"ok",data:jsondata[0]}
+//     }catch (err) {
+//         ctx.body = {"code":500,"message":err.toString(),data:[]}
+//     }
+// })
 module.exports = router;
