@@ -48,4 +48,22 @@ router.get('/personal/userAssessment/:uId',async (ctx,next)=>{
 //         ctx.body = {"code":500,"message":err.toString(),data:[]}
 //     }
 // })
+// 获取所有评论信息
+router.get('/personal/allAssessment',async (ctx,next)=>{
+    try{
+        let jsondata = await assessmentDAO.getallAssessment();
+        ctx.body = {"code":200,"message":"ok",data:jsondata}
+    }catch (err) {
+        ctx.body = {"code":500,"message":err.toString(),data:[]}
+    }
+})
+//获取用户，评论，回复所有信息
+router.get('/allinfo',async (ctx,next)=>{
+    try{
+        let jsondata = await assessmentDAO.getallinfo();
+        ctx.body = {"code":200,"message":"ok",data:jsondata}
+    }catch (err) {
+        ctx.body = {"code":500,"message":err.toString(),data:[]}
+    }
+})
 module.exports = router;

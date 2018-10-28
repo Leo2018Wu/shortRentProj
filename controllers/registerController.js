@@ -25,62 +25,123 @@ module.exports = {
         }
     },
     userperfect: async (ctx, next)=>{
+        var perfect = {}
+        perfect.uPhone = ctx.request.body.uPhone;
+        perfect.uName = ctx.request.body.uName;
+        perfect.uEmail =ctx.request.body.uEmail;
+        perfect.uId = ctx.request.body.uId;
+        try {
+            userDAO.userperfect(perfect);
+            ctx.body = {"code": 200, "message": '完善信息成功'};
+        }
+        catch (err) {
+            ctx.body = {"code": 500, "message": '执行失败', data: []}
+        }
+    },
+    updateIdInfo: async (ctx, next)=>{
+        var info = {}
+        info.uTrueName = ctx.request.body.uTrueName;
+        info.uCardId = ctx.request.body.uCardId;
+        info.uSex = ctx.request.body.uSex;
+        info.uId = ctx.request.body.uId;
+        try {
+            userDAO.updateIdInfo(info);
+            ctx.body = {"code": 200, "message": '完善信息成功'};
+        }
+        catch (err) {
+            ctx.body = {"code": 500, "message": '执行失败', data: []}
+        }
+    },
+    updatePhoto:async (ctx,next)=>{
         var form = new formidable.IncomingForm();
+        form.uploadDir = '../public/Headuploadfile'    //设置文件存放路径  //
+        form.multiples = true;  //设置上传多文件
         form.parse(ctx.req, function (err, fields, files) {
-            var src = files.uheadPic.path;
-            var des = path.join(__dirname, '../', 'public/uploadfile', path.basename(src) + '.jpg');
-            fs.copyFile(src, des, function () {
-                console.log('文件复制成功');
-                var perfect = {}
-                perfect.uName = fields.uname;
-                perfect.uHeadPic =des;
-                perfect.uEmail = fields.uemail;
-                perfect.uTrueName = fields.utrueName;
-                perfect.uCardId = fields.ucardid;
-                perfect.uPossPort = fields.upossPort;
-                perfect.uSex = fields.usex;
-                perfect.uBirth = fields.ubirth;
-                perfect.uLocation = fields.ulocation;
-                perfect.uRegisterTime = fields.uregistertime;
-                perfect.uPhone = fields.uphone;
-                // //无邀请码，这里通过用户名id来匹配用户，进而改信息
-                console.log(perfect);
-                try {
-                    userDAO.userperfect(perfect);
-                    ctx.body = {"code": 200, "message": '完善信息成功'};
-                }
-                catch (err) {
-                    ctx.body = {"code": 500, "message": '执行失败', data: []}
-                }
-            });
+            console.log('456')
+            console.log(files)
+            console.log('123')
+            //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
+            console.log(fields)
+            if (files.uHeadPic) {
+                // 获取传入的路径与名字
+                let src = files.uHeadPic.path;
+                let fileName = files.uHeadPic.name;
+                // 获取源文件全路径
+                let srcNew = path.join(__dirname, files.uHeadPic.path);
+                // 改成你想要的名字
+                let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
+                let stt = `http://localhost:3000/Headuploadfile/${destName}`;
+                let name = path.join(path.parse(srcNew).dir, destName);
+                fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
+                let photo = {};
+                photo.uId=fields.uId,
+                    photo.uHeadPic=stt
+                userDAO.updatePhoto(photo)
+            }
+            //根据fileds.mydata获取上传表单元素的数据，执行写入数据库的操作
+            if (err) {
+                ctx.body = '上传失败'
+            }
         })
-        ctx.body = {"code": 200, "message": '完善信息成功'}
     },
     userlogin: async (ctx, next) => {
+        let query = ctx.request.body;
+        let user = {};
+        const hash = crypto.createHash('md5');
+        hash.update(query.uPwd)
+        let upwd = hash.digest('hex');
+        user.uPhone = query.uPhone;
+        user.uPwd = upwd;
         try {
-            let uphone = ctx.request.body.uphone;
-
-            //密码加密
-            const hash = crypto.createHash('md5');
-            hash.update(ctx.request.body.upwd)
-            let upwd = hash.digest('hex');
-
-            console.log(upwd);
-            let login = await userDAO.userlogin();
-            let result = false;
-            for (let i = 0;i < login.length;i++) {
-                if (upwd == login[i].uPwd && uphone == login[i].uPhone) {
-                    result = true;
-                    ctx.body = {'code': 200, 'message': '登录成功', "data": result}
-                    return;
-                } else {
-                    ctx.body = {'code': 200, 'message': '登录失败', "data":result};
-                    result = false;
+            //获取传回的手机号和密码
+            let jsondata = await userDAO.userlogin(user.uPhone);
+            console.log(jsondata);
+            if (jsondata.length == 0) {
+                ctx.body = {
+                    code: 500,
+                    message: '用户不存在'
                 }
+            } else if (jsondata[0].uPwd == user.uPwd) {
+                ctx.body = {"code": 200, "message": "登录成功！", data: jsondata[0]}
+                //用户登录成功，将信息保存在cookie中
+                ctx.cookies.set('user', jsondata[0])
+
+            } else {
+                ctx.body = {"code": 403, "message": '用户不存在或密码错误', data: []}
             }
-        }catch (err) {
-            ctx.body = {"code": 500, "message": '服务器错误', err}
         }
+        catch
+            (err)
+        {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+        // try {
+        //     let uphone = ctx.request.body.uphone;
+        //
+        //     //密码加密
+        //     const hash = crypto.createHash('md5');
+        //     hash.update(ctx.request.body.upwd)
+        //     let upwd = hash.digest('hex');
+        //
+        //     console.log(upwd);
+        //     let login = await userDAO.userlogin();
+        //     let result = false;
+        //     let user = {}
+        //     for (let i = 0;i < login.length;i++) {
+        //         if (upwd == login[i].uPwd && uphone == login[i].uPhone) {
+        //             result = true;
+        //             ctx.body = {'code': 200, 'message': '登录成功', "data": result}
+        //             ctx.cookies.set('user', jsondata[0])
+        //             return;
+        //         } else {
+        //             ctx.body = {'code': 403, 'message': '登录失败', "data":result};
+        //             result = false;
+        //         }
+        //     }
+        // }catch (err) {
+        //     ctx.body = {"code": 500, "message": '服务器错误', err}
+        // }
+        //用户登录
     },
     //查询指定用户信息
     getUserInfo: async (ctx, next) => {
@@ -92,7 +153,9 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
+
 };
+
 
 
 
