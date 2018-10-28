@@ -42,6 +42,11 @@ router.post('/perfect/password',async (ctx,next)=>{
     await changepwdController.userchangpwd(ctx,next);
 })
 
+//查询指定用户详细信息
+router.get('/getUserInfos/:uId',async (ctx,next)=>{
+    await userController.getUserInfo(ctx,next)
+})
+
 
 
 module.exports = router

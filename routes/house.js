@@ -10,6 +10,7 @@ router.post('/',async (ctx,next)=>{
     await houseController.locationHouse(ctx,next)
     // await ctx.render('house',{data:jsondata})
 })
+
 router.get('/scoreOrderHouse',async (ctx,next)=>{
     await houseController.scoreOrderHouse(ctx,next)
 })

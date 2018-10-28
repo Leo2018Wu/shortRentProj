@@ -6,7 +6,7 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 
-const cors = require('koa2-cors')
+// const cors = require('koa2-cors')
 
 const index = require('./routes/index')
 const userorderdis = require('./routes/userorderdis')
@@ -42,17 +42,18 @@ app.use(async (ctx, next) => {
   const ms = new Date() - start
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
-// 跨域请求
-app.use(cors({
-    origin: function (ctx) {
-        return 'http://localhost:8080'; //这样就能只允许 http://localhost:63342 这个域名的请求了
-    },
-    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-    maxAge: 5,
-    credentials: true,
-    allowMethods: ['GET', 'POST', 'DELETE'],
-    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
-}))
+//跨域请求
+// app.use(cors({
+//     origin: function (ctx) {
+//         return 'http://localhost:63342'; //这样就能只允许 http://localhost:63342 这个域名的请求了
+//     },
+//     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+//     maxAge: 5,
+//     credentials: true,
+//     allowMethods: ['GET', 'POST', 'DELETE'],
+//     allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+// }))
+
 
 // routes
 app.use(index.routes(), index.allowedMethods())

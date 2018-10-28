@@ -9,6 +9,18 @@ class Assessment {
     getRecommendAssessment(id){
         return DAO(' select * from assessment,user where user.uId = assessment.uId and assessment.recommend = ?',[id]);
     }
+// //    获取所有评论
+    getallAssessment(){
+        return DAO('select * from assessment');
+    }
+//获取用户，评论，回复所有信息
+    getallinfo(){
+        return DAO('select * from user INNER JOIN assessment on assessment.aId = user.uId INNER JOIN reply on assessment.aId = reply.aId');
+    }
+    //推荐的评价
+    getRecommendAssessment(id){
+        return DAO(' select * from assessment,user where user.uId = assessment.uId and assessment.recommend = 1',[id]);
+    }
 //按用户显示：显示某个用户的评价信息（ok）
     getUserAssessment(id){
         return DAO('select * from assessment,user,house where house.hId = assessment.hId and user.uId = assessment.uId and assessment.uId= ? ',[id]);

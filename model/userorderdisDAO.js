@@ -19,6 +19,13 @@ class DB {
             [perfect.uName,perfect.uLocation, perfect.uEmail, perfect.uHeadPic,perfect.uTrueName,perfect.uPossPort,perfect.uBirth,perfect.uRegisterTime,perfect.uSex,perfect.uCardId,perfect.uPhone ]);
     //    用户性别无法更新，uSex
     }
+    //查询指定用户信息
+    getUserInfo(id){
+        return DAO('SELECT * FROM `user` WHERE uId = ? ',[id]);
+    }
+
+
+
 
 }
 module.exports = new DB();
