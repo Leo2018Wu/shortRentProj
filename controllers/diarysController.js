@@ -201,35 +201,7 @@ form.parse(ctx.req, async function (err, fields, files) {
 })
 },*/
 
-    addDiarys:async (ctx,next) => {
-        //1.收集数据
-        // let jsonData = await adminDAO.getOneOrders(ctx.params.oId)
-        // console.log(jsonData[0].hId)
-        // console.log(jsonData[0].uId)
-        // console.log(jsonData[0].arrvialDate)
-        let diarys = { };
 
-        diarys.dId = ctx.request.body.dId
-        diarys.arrvialDate = ctx.request.body.arrvialDate
-        diarys.dContent = ctx.request.body.dContent
-        diarys.dDate = new Date()
-        diarys.recommend = ctx.request.body.recommend
-        diarys.uId = ctx.request.body.uId
-        diarys.hId = ctx.request.body.hId
-        diarys.dTitle = ctx.request.body.dTitle
-        diarys.dThumbs= ctx.request.body.dThumbs
-        diarys.dImages= ctx.request.body.dImages
-        diarys.oId= ctx.request.body.oId
-        console.log(diarys);
-        try{
-            //2.调用用户数据访问对象的添加方法
-            let jsonDatas = await diarysDAO.addDiarys(diarys)
-            //3.反馈结果
-            ctx.body = {"code":200,"message":"ok",data:jsonDatas}
-        }catch(err){
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
-        }
-    },
 
 
 
