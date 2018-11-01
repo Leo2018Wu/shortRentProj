@@ -31,12 +31,34 @@ router.post('/getuserinfo/:uPhone',async (ctx,next)=>{
         ctx.body = {"code":500,"message":err.toString(),data:[]}
     }
 })
-
-//用户完善基本信息
 router.post('/perfect',async (ctx,next)=> {
     await userController.userperfect(ctx,next);
 })
-//用户完善身份信息
+
+
+//用更改用户名
+router.post('/updateuName',async (ctx,next)=> {
+    await userController.updateuName(ctx,next);
+})
+//用更改邮箱
+router.post('/updateuEmail',async (ctx,next)=> {
+    await userController.updateuEmail(ctx,next);
+})
+//用户完善真实姓名
+router.post('/updateTureName',async (ctx,next)=> {
+    await userController.updateTureName(ctx,next);
+})
+//用户完善身份证号
+router.post('/updateuIdcard',async (ctx,next)=> {
+    await userController.updateuIdcard(ctx,next);
+})
+//用户完善护照
+router.post('/updateuPoss',async (ctx,next)=> {
+    await userController.updateuPoss(ctx,next);
+})
+
+
+
 router.post('/updateIdInfo',async (ctx,next)=> {
     await userController.updateIdInfo(ctx,next);
 })

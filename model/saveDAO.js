@@ -4,7 +4,7 @@ const DAO = require('../model/DAO')
 class DB{
     //根据用户编号查找所有收藏
     getUsave(id){
-        return DAO('select * from save,`user`,house where house.hId = save.hId and save.uId = `user`.uId and save.uId = ?',[id]);
+        return DAO('select * from save,`user`,house where house.hId = save.hId and save.uId = `user`.uId and save.uId = ? order by sDate desc',[id]);
     }
     //根据收藏编号删除收藏
     deleteSave(id){

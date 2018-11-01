@@ -23,7 +23,7 @@ class Assessment {
     }
 //按用户显示：显示某个用户的评价信息（ok）
     getUserAssessment(id){
-        return DAO('select * from assessment,user,house where house.hId = assessment.hId and user.uId = assessment.uId and assessment.uId= ? ',[id]);
+        return DAO('select * from assessment,user,house where house.hId = assessment.hId and user.uId = assessment.uId and assessment.uId= ? order by aDate desc',[id]);
     }
 //添加房源评论；用户添加某个房源评价信息(ok）
     addAssessment(assessment){

@@ -144,51 +144,12 @@ module.exports = {
         form.multiples = true;  //设置上传多文件
         form.keepExtensions = true;//保留扩展名
         form.parse(ctx.req, function (err, fields, files) {
-            console.log('123')
             console.log(files)
-            console.log('456')
             //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
             console.log(fields)
-            // if (files.dImages) {
+            if (files == {}) {
+
                 let diarys = {};
-            diarys.dImages = ''
-            console.log(files.dImages);
-            var j = files.dImages.length
-            console.log(j)
-            //根据fileds.mydata获取上传表单元素的数据，执行写入数据库的操作
-            // if(files.dImages.length == 'undefined') {
-            //     diarys.dImages = ''
-            // }
-            // else {
-                if( j>0) {
-                for (var i = 0; i <j; i++) {
-                    let src = files.dImages[i].path;
-                    let fileName = files.dImages[i].name;
-                    // 获取源文件全路径
-                    let srcNew = path.join(__dirname, files.dImages[i].path);
-                    // 改成你想要的名字
-                    let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
-                    let stt = `http://localhost:3000/diaryImages/${destName}`;
-                    let name = path.join(path.parse(srcNew).dir, destName);
-                    fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
-                    diarys.dImages = diarys.dImages + stt + ','
-                    // console.log(stt)
-                    }
-                }
-                else {
-                let src = files.dImages.path;
-                let fileName = files.dImages.name;
-                // 获取源文件全路径
-                let srcNew = path.join(__dirname, files.dImages.path);
-                // 改成你想要的名字
-                let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
-                let stt = `http://localhost:3000/diaryImages/${destName}`;
-                let name = path.join(path.parse(srcNew).dir, destName);
-                fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
-                diarys.dImages =stt + ','
-                }
-            // }
-                // let diarys = {};
                 diarys.dId = fields.dId
                 diarys.arrvialDate = fields.arrvialDate
                 diarys.dContent = fields.dContent
@@ -197,19 +158,91 @@ module.exports = {
                 diarys.uId = fields.uId
                 diarys.hId = fields.hId
                 diarys.dTitle = fields.dTitle
-                // diarys.dImages = stt
+                // diarys.dImages = ''
                 diarys.dThumbs = fields.dThumbs
                 diarys.oId = fields.oId
                 diarysDAO.addDiarys(diarys);
-            // }
-            try{
-                ctx.body = {"code":200,"message":"ok",data:[]}
-            }catch (err) {
-                ctx.body = {"code":500,"message":err.toString(),data:[]}
+
+                // }
+                try {
+                    console.log(ok)
+                    ctx.body = {"code": 200, "message": "ok", data: []}
+                } catch (err) {
+                    ctx.body = {"code": 500, "message": err.toString(), data: []}
+                }
+            }
+            else  {
+                var j = files.dImages.length
+                console.log(j)
+                if (j > 1) {
+                    let diarys = {};
+                    diarys.dImages = ''
+                    for (var i = 0; i < j; i++) {
+                        let src = files.dImages[i].path;
+                        let fileName = files.dImages[i].name;
+                        // 获取源文件全路径
+                        let srcNew = path.join(__dirname, files.dImages[i].path);
+                        // 改成你想要的名字
+                        let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
+                        let stt = `http://localhost:3000/diaryImages/${destName}`;
+                        let name = path.join(path.parse(srcNew).dir, destName);
+                        fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
+                        diarys.dImages = diarys.dImages + stt + ','
+                        console.log( diarys.dImages)
+                    }
+                    diarys.dId = fields.dId
+                    diarys.arrvialDate = fields.arrvialDate
+                    diarys.dContent = fields.dContent
+                    diarys.dDate = new Date()
+                    diarys.recommend = fields.recommend
+                    diarys.uId = fields.uId
+                    diarys.hId = fields.hId
+                    diarys.dTitle = fields.dTitle
+                    diarys.dThumbs = fields.dThumbs
+                    diarys.oId = fields.oId
+                    diarysDAO.addDiarys(diarys);
+                    // }
+                    try {
+                        ctx.body = {"code": 200, "message": "ok", data: []}
+                    } catch (err) {
+                        ctx.body = {"code": 500, "message": err.toString(), data: []}
+                    }
+                }
+                else {
+                    let diarys = {};
+                    let src = files.dImages.path;
+                    let fileName = files.dImages.name;
+                    // 获取源文件全路径
+                    let srcNew = path.join(__dirname, files.dImages.path);
+                    // 改成你想要的名字
+                    let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
+                    let stt = `http://localhost:3000/diaryImages/${destName}`;
+                    let name = path.join(path.parse(srcNew).dir, destName);
+                    fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
+                    diarys.dImages = stt + ','
+                    diarys.dId = fields.dId
+                    diarys.arrvialDate = fields.arrvialDate
+                    diarys.dContent = fields.dContent
+                    diarys.dDate = new Date()
+                    diarys.recommend = fields.recommend
+                    diarys.uId = fields.uId
+                    diarys.hId = fields.hId
+                    diarys.dTitle = fields.dTitle
+                    // diarys.dImages = stt
+                    diarys.dThumbs = fields.dThumbs
+                    diarys.oId = fields.oId
+                    diarysDAO.addDiarys(diarys);
+                    // }
+                    try {
+                        ctx.body = {"code": 200, "message": "ok", data: []}
+                    } catch (err) {
+                        ctx.body = {"code": 500, "message": err.toString(), data: []}
+                    }
+
+                }
             }
 
         })
-
     },
 
 }

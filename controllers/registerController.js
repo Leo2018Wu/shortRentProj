@@ -162,6 +162,69 @@ module.exports = {
         }
     },
 
+
+
+    updateuEmail: async (ctx, next)=> {
+        var emailInfo = {}
+        emailInfo.uEmail = ctx.request.body.uEmail;
+        emailInfo.uId = ctx.request.body.uId;
+        try {
+        let jsonData = await  userDAO.updateuEmail(emailInfo);
+            ctx.body = {"code": 200, "message": '完善信息成功',data:jsonData};
+        }
+        catch (err) {
+            ctx.body = {"code": 500, "message": '执行失败', data: []}
+        }
+    },
+    updateuName: async (ctx, next)=> {
+        var nameInfo = {}
+        nameInfo.uName = ctx.request.body.uName;
+        nameInfo.uId = ctx.request.body.uId;
+        // try {
+        let jsonData = await userDAO.updateuName(nameInfo);
+        //     ctx.body = {"code": 200, "message": '完善信息成功',data:jsonData};
+        // }
+        // catch (err) {
+        //     ctx.body = {"code": 500, "message": '执行失败', data: []}
+        // }
+        console.log(jsonData)
+    },
+    updateTureName: async (ctx, next)=> {
+        var ture = {}
+        ture.uTrueName = ctx.request.body.uTrueName;
+        ture.uId = ctx.request.body.uId;
+        try {
+            let jsonData = await userDAO.updateTureName(ture);
+            ctx.body = {"code": 200, "message": '完善信息成功',data:jsonData};
+        }
+        catch (err) {
+            ctx.body = {"code": 500, "message": '执行失败', data: []}
+        }
+    },
+    updateuPoss: async (ctx, next)=> {
+        var poss = {}
+        poss.uPossPort = ctx.request.body.uPossPort;
+        poss.uId = ctx.request.body.uId;
+        try {
+            let jsonData = await userDAO.updateuPoss(poss);
+            ctx.body = {"code": 200, "message": '完善信息成功',data:jsonData};
+        }
+        catch (err) {
+            ctx.body = {"code": 500, "message": '执行失败', data: []}
+        }
+    },
+    updateuIdcard: async (ctx, next)=> {
+        var card = {}
+        card.uCardId = ctx.request.body.uCardId;
+        card.uId = ctx.request.body.uId;
+        try {
+            let jsonData = await userDAO.updateuIdcard(card);
+            ctx.body = {"code": 200, "message": '完善信息成功',data:jsonData};
+        }
+        catch (err) {
+            ctx.body = {"code": 500, "message": '执行失败', data: []}
+        }
+    },
 };
 
 

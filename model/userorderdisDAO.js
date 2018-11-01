@@ -24,11 +24,37 @@ class DB {
         return DAO('update `user` set uTrueName = ?,uCardId = ?,uSex = ? where uId = ?',
             [info.uTrueName,info.uCardId,info.uSex,info.uId])
     }
-    // //用户修改密码
-    // updatePwd(pwd){
-    //     return DAO('update `user` set uPwd = ?,where uId = ? ',
-    //         [pwd.uPwd,pwd.uId]);
-    // }
+
+
+
+    //用户修改邮箱
+    updateuEmail(emailInfo){
+        return DAO('update `user` set uEmail = ? where uId = ? ',
+            [emailInfo.uEmail,emailInfo.uId]);
+    }
+    //用户修改用户名
+    updateuName(nameInfo){
+        return DAO('update `user` set uName = ? where uId = ? ',
+            [nameInfo.uName,nameInfo.uId]);
+    }
+    //用户修改身份证号
+    updateuIdcard(card){
+        return DAO('update `user` set uCardId = ? where uId = ? ',
+            [card.uCardId,card.uId]);
+    }
+    //用户修改真实姓名
+    updateTureName(ture){
+        return DAO('update `user` set uTrueName = ? where uId = ? ',
+            [ture.uTrueName,ture.uId]);
+    }
+    //用户完善护照
+    updateuPoss(poss){
+        return DAO('update `user` set uPossPort = ? where uId = ? ',
+            [poss.uPossPort,poss.uId]);
+    }
+
+
+
     //用户上传头像
     updatePhoto(photo){
         return DAO('update `user` set uHeadPic = ? where uId = ? ',

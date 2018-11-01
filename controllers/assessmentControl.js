@@ -10,14 +10,15 @@ module.exports = {
         form.keepExtensions = true;//保留扩展名
         form.parse(ctx.req, function (err, fields, files) {
                 console.log('123')
-                console.log(files)
+                console.log(files.aImages)
                 console.log('456')
                 //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
                 console.log(fields)
             let assessment = {};
             assessment.aImages = ''
             var j = files.aImages.length
-            if(j>0){
+            console.log(j)
+            // if(j>1){
                 for (var i = 0;i<j; i++){
                     let src = files.aImages[i].path;
                     let fileName = files.aImages[i].name;
@@ -28,22 +29,22 @@ module.exports = {
                     let stt = `http://localhost:3000/assessmentImages/${destName}`;
                     let name = path.join(path.parse(srcNew).dir, destName);
                     fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
-                    assessment.aImages =stt + ','
+                    assessment.aImages = assessment.aImages+stt + ','
                 }
-            }
-            else {
-                let src = files.aImages.path;
-                let fileName = files.aImages.name;
-                // 获取源文件全路径
-                let srcNew = path.join(__dirname, files.aImages.path);
-                // 改成你想要的名字
-                let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
-                let stt = `http://localhost:3000/assessmentImages/${destName}`;
-                let name = path.join(path.parse(srcNew).dir, destName);
-                fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
-                assessment.aImages =stt + ','
-
-            }
+            // }
+            // if(j=1) {
+            //                 let src = files.aImages.path;
+            //                 let fileName = files.aImages.name;
+            //                 // 获取源文件全路径
+            //                 let srcNew = path.join(__dirname, files.aImages.path);
+            //                 // 改成你想要的名字
+            //                 let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
+            //                 let stt = `http://localhost:3000/assessmentImages/${destName}`;
+            //                 let name = path.join(path.parse(srcNew).dir, destName);
+            //                 fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
+            //                 assessment.aImages =stt + ','
+            //
+            //             }
 
             assessment.aId= fields.aId;
             assessment.arrvialDate= fields.arrvialDate;

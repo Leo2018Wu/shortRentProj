@@ -12,7 +12,7 @@ class DB{
     }
     //获取指定用户编号的日记信息方法
     getUDiarys(id){
-        return DAO('select * from diary,`user`,house where house.hId = diary.hId and `user`.uId = diary.uId and diary.uId = ?',[id]);
+        return DAO('select * from diary,`user`,house where house.hId = diary.hId and `user`.uId = diary.uId and diary.uId = ? order by dDate desc',[id]);
     }
     //获取指定日记编号的全部日记信息方法
     getDDiarys(id){

@@ -38,22 +38,22 @@ class DB{
     // }
     //根据用户编号查询待支付的订单
     getWaitorder(uId){
-        return DAO('SELECT * FROM `order`,house where`order`.hId = house.hId and`order`.oStatus =0 and  `order`.uId = ? ',
+        return DAO('SELECT * FROM `order`,house where`order`.hId = house.hId and`order`.oStatus =0 and  `order`.uId = ? order by oDate desc',
             [uId]);
     }
     //根据用户编号查询支付成功订单
     getSuccessorder(uId){
-        return DAO('SELECT * FROM `order`,house where`order`.hId = house.hId and`order`.oStatus =1 and  `order`.uId = ? ',
+        return DAO('SELECT * FROM `order`,house where`order`.hId = house.hId and`order`.oStatus =1 and  `order`.uId = ? order by oDate desc',
             [uId]);
     }
     //根据用户编号查询订单完成的订单
     getFinishorder(uId){
-        return DAO('SELECT * FROM `order`,house where`order`.hId = house.hId and`order`.oStatus =2 and  `order`.uId = ? ',
+        return DAO('SELECT * FROM `order`,house where`order`.hId = house.hId and`order`.oStatus =2 and  `order`.uId = ? order by oDate desc',
             [uId]);
     }
     //根据用户编号查询退订的订单
     getCancleorder(uId){
-        return DAO('SELECT * FROM `order`,house where`order`.hId = house.hId and`order`.oStatus =-1 and  `order`.uId = ? ',
+        return DAO('SELECT * FROM `order`,house where`order`.hId = house.hId and`order`.oStatus =-1 and  `order`.uId = ? order by oDate desc',
             [uId]);
     }
     //根据订单编号多表查询生成的订单
