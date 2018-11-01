@@ -1,5 +1,9 @@
 var diarysDAO = require('../model/diarysDAO')
 var adminDAO = require('../model/adminDAO')
+var formidable = require('formidable');
+var fs =require('fs');
+var path = require('path');
+const crypto = require('crypto');
 module.exports = {
     //推荐的日记
     getDiarys:async (ctx,next) => {
@@ -41,7 +45,7 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
-    addDiarys:async (ctx,next) => {
+    addDiarys1:async (ctx,next) => {
         //1.收集数据
         // let jsonData = await adminDAO.getOneOrders(ctx.params.oId)
         // console.log(jsonData[0].hId)
@@ -134,77 +138,78 @@ module.exports = {
         }
     },
 
-    /*
+    addDiarys: async (ctx, next) => {
+        var form = new formidable.IncomingForm();
+        form.uploadDir = '../public/diaryImages';   //设置文件存放路径
+        form.multiples = true;  //设置上传多文件
+        form.keepExtensions = true;//保留扩展名
+        form.parse(ctx.req, function (err, fields, files) {
+            console.log('123')
+            console.log(files)
+            console.log('456')
+            //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
+            console.log(fields)
+            // if (files.dImages) {
+                let diarys = {};
+            diarys.dImages = ''
+            console.log(files.dImages);
+            var j = files.dImages.length
+            console.log(j)
+            //根据fileds.mydata获取上传表单元素的数据，执行写入数据库的操作
+            // if(files.dImages.length == 'undefined') {
+            //     diarys.dImages = ''
+            // }
+            // else {
+                if( j>0) {
+                for (var i = 0; i <j; i++) {
+                    let src = files.dImages[i].path;
+                    let fileName = files.dImages[i].name;
+                    // 获取源文件全路径
+                    let srcNew = path.join(__dirname, files.dImages[i].path);
+                    // 改成你想要的名字
+                    let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
+                    let stt = `http://localhost:3000/diaryImages/${destName}`;
+                    let name = path.join(path.parse(srcNew).dir, destName);
+                    fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
+                    diarys.dImages = diarys.dImages + stt + ','
+                    // console.log(stt)
+                    }
+                }
+                else {
+                let src = files.dImages.path;
+                let fileName = files.dImages.name;
+                // 获取源文件全路径
+                let srcNew = path.join(__dirname, files.dImages.path);
+                // 改成你想要的名字
+                let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
+                let stt = `http://localhost:3000/diaryImages/${destName}`;
+                let name = path.join(path.parse(srcNew).dir, destName);
+                fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
+                diarys.dImages =stt + ','
+                }
+            // }
+                // let diarys = {};
+                diarys.dId = fields.dId
+                diarys.arrvialDate = fields.arrvialDate
+                diarys.dContent = fields.dContent
+                diarys.dDate = new Date()
+                diarys.recommend = fields.recommend
+                diarys.uId = fields.uId
+                diarys.hId = fields.hId
+                diarys.dTitle = fields.dTitle
+                // diarys.dImages = stt
+                diarys.dThumbs = fields.dThumbs
+                diarys.oId = fields.oId
+                diarysDAO.addDiarys(diarys);
+            // }
+            try{
+                ctx.body = {"code":200,"message":"ok",data:[]}
+            }catch (err) {
+                ctx.body = {"code":500,"message":err.toString(),data:[]}
+            }
 
+        })
 
-    updateCompany: async (ctx, next) => {
-
-    var form = new formidable.IncomingForm();
-form.uploadDir = '../public/images';   //设置文件存放路径
-form.multiples = true;  //设置上传多文件
-form.keepExtensions = true;//保留扩展名
-var iMages = "";
-var src = "";
-var fileDes = "";//文件添加时间戳
-form.parse(ctx.req, async function (err, fields, files) {
-    console.log('123')
-    console.log(files)
-    console.log('456')
-    console.log(files)
-    //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
-    console.log(fields)
-    //根据fileds.mydata获取上传表单元素的数据，执行写入数据库的操作
-    licenseImage = files.licenseImage.name;
-    clogo = files.clogo.name;
-    console.log(licenseImage);
-    console.log(clogo);
-    console.log(files.licenseImage.path);
-    src = path.join(__dirname,files.licenseImage.path);
-    console.log('src路径'+src);
-    src1 = path.join(__dirname,files.clogo.path);
-    console.log("src1 : " + src1);
-    fileDes = path.basename(licenseImage, path.extname(licenseImage)) + moment(new Date()).format("YYYYMMDDHHMMSS") + path.extname(licenseImage);
-    fileDes1 = path.basename( clogo, path.extname( clogo)) + moment(new Date()).format("YYYYMMDDHHMMSS") + path.extname(clogo);
-    console.log("src : " + src);
-    console.log("src1 : " + src1);
-    console.log("dir : " + path.join(path.parse(src).dir))
-    console.log("fileDes" + fileDes)
-    fs.rename(src, path.join(path.parse(src).dir, fileDes));//重命名
-    fs.rename(src1, path.join(path.parse(src1).dir, fileDes1));
-    let str = `http://localhost:3000/images/${fileDes}`;
-    let str1 = `http://localhost:3000/images/${fileDes1}`;
-    let company = {}
-    company.licenseImage = str;
-    company.clogo = str1;
-    company.licenseId = fields.licenseId;
-    company.chineseName =fields.chineseName;
-    company.englishName =fields.englishName;
-    company.companyAddress =fields.companyAddress;
-    company.industy =fields.industy;
-    company.classify =fields.classify;
-    company.cIntroduce =fields.cIntroduce;
-    company.principalName =fields.principalName;
-    company. principalPhone =fields. principalPhone;
-    company.principalEmail =fields.principalEmail;
-    console.log("str:" + str);
-    console.log("str:" + str1);
-    console.log(fields);
-    console.log("licenseId:" + fields.licenseId);
-    try {
-        await companyDAO.updateCompany(company);
-        ctx.body = {"code": 200, "message": "ok", data:str };
-        console.log('data:'+data);
-    } catch (e) {
-        ctx.body = {"code": 500, "message": "err" + e.message, data: []};
-    }
-    // //根据fileds.mydata获取上传表单元素的数据，执行写入数据库的操作
-})
-},*/
-
-
-
-
-
-
+    },
 
 }

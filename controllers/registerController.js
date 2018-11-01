@@ -65,13 +65,19 @@ module.exports = {
             if (files.uHeadPic) {
                 // 获取传入的路径与名字
                 let src = files.uHeadPic.path;
+                console.log(src);
                 let fileName = files.uHeadPic.name;
+                console.log(fileName);
                 // 获取源文件全路径
                 let srcNew = path.join(__dirname, files.uHeadPic.path);
+                console.log(srcNew);
                 // 改成你想要的名字
                 let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
-                let stt = `http://localhost:3000/Headuploadfile/${destName}`;
+                console.log(destName);
                 let name = path.join(path.parse(srcNew).dir, destName);
+                console.log(name);
+                let stt = `http://localhost:3000/Headuploadfile/${destName}`;
+                console.log(stt);
                 fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
                 let photo = {};
                 photo.uId=fields.uId,
@@ -79,8 +85,10 @@ module.exports = {
                 userDAO.updatePhoto(photo)
             }
             //根据fileds.mydata获取上传表单元素的数据，执行写入数据库的操作
-            if (err) {
-                ctx.body = '上传失败'
+            try{
+                ctx.body = {"code":200,"message":"ok",data:[]}
+            }catch (err) {
+                ctx.body = {"code":500,"message":err.toString(),data:[]}
             }
         })
     },

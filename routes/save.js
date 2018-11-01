@@ -7,11 +7,12 @@ var mysql = require('mysql')
 //save根路由
 router.prefix('/save')
 //用户添加收藏
-// router.post('/orders/add/:oId',async (ctx,next)=>{
-//     await diarysCtroller.addDiarys(ctx,next)
-//     console.log('添加成功')
+router.post('/add',async (ctx,next)=> {
+    await saveController.addSave(ctx, next)
+
+})
+//删除收藏')
 // })
-//删除收藏
 router.get('/delete/:sId',async (ctx,next)=>{
     await saveController.deleteSave(ctx,next)
     console.log('删除成功')
