@@ -10,10 +10,10 @@ class DB{
     deleteSave(id){
         return DAO('delete from save where sId=?',[id])
     }
-    //添加收藏
-    // addSave(save){
-    //     return DAO('insert into save values(?,?,?,?)',
-    //         [save.sId,save.sDate,save.hId,save.uId])
-    // }
+    // 添加收藏
+    addSave(save){
+        return DAO('insert into save(sDate,hId,uId) VALUES(?,?,?)',
+            [save.sDate,save.hId,save.uId])
+    }
 }
 module.exports = new DB();

@@ -15,7 +15,7 @@ class Assessment {
     }
 //获取用户，评论，回复所有信息
     getallinfo(){
-        return DAO('select * from user INNER JOIN assessment on assessment.aId = user.uId INNER JOIN reply on assessment.aId = reply.aId');
+        return DAO('select * from user INNER JOIN assessment on assessment.uId = user.uId INNER JOIN reply on assessment.aId = reply.aId');
     }
     //推荐的评价
     getRecommendAssessment(id){
@@ -37,6 +37,10 @@ class Assessment {
 //删除评价信息(ok)
     delAssessment(id){
         return DAO('call proc_del(?);',[id]);
+    }
+ //用户通过hId进行判断三表查询获取所有评价信息
+    allassmentreply(hId){
+        return DAO('select assessment.*,user.uName,reply.rContent from assessment LEFT JOIN user on user.uId =assessment.uId  RIGHT JOIN reply on assessment.aId = reply.aId WHERE assessment.hId = ?',[hId]);
     }
 }
 module.exports = new Assessment();

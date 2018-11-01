@@ -30,7 +30,7 @@ module.exports = {
     getOneHouse:async(ctx,next)=>{
         try{
             let jsondata=await houseDAO.getOneHouse(ctx.params.hId)
-            // ctx.set('content-type','application/json')
+
             ctx.body={"code":"200","message":"ok",data:jsondata};
         }
         catch (err) {
