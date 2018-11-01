@@ -8,8 +8,8 @@ class DB{
     //用户添加订单
     //1024修改添加订单表和入住人
     addOrder(orderoccupant){
-        return DAO('call proc_addorder(?,?,?,?,?,?,?,?,?,?)',
-            [orderoccupant.arrvialDate,orderoccupant.leaveDate,orderoccupant.hPrice,orderoccupant.oDate,orderoccupant.oStatus,orderoccupant.uId,orderoccupant.hId,orderoccupant.occName,orderoccupant.occCordId,orderoccupant.occPhone])
+        return DAO('call proc_addorder(?,?,?,?,?,?,?,?,?)',
+            [orderoccupant.arrvialDate,orderoccupant.leaveDate,orderoccupant.hPrice,orderoccupant.oStatus,orderoccupant.uId,orderoccupant.hId,orderoccupant.occName,orderoccupant.occCordId,orderoccupant.occPhone])
     }
     //获取指定编号的订单的详情
     getOneorder(oId){
