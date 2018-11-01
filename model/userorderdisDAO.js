@@ -24,11 +24,7 @@ class DB {
         return DAO('update `user` set uTrueName = ?,uCardId = ?,uSex = ? where uId = ?',
             [info.uTrueName,info.uCardId,info.uSex,info.uId])
     }
-    // //用户修改密码
-    // updatePwd(pwd){
-    //     return DAO('update `user` set uPwd = ?,where uId = ? ',
-    //         [pwd.uPwd,pwd.uId]);
-    // }
+
     //用户上传头像
     updatePhoto(photo){
         return DAO('update `user` set uHeadPic = ? where uId = ? ',

@@ -39,15 +39,7 @@ router.get('/details/assessment/:hId',async (ctx,next)=>{
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     })
-// 获取用户的订单号
-// router.get('/personal/userOrder/:oId',async (ctx,next)=>{
-//     try{
-//         let jsondata = await assessmentDAO.getOneOrder(ctx.params.oId);
-//         ctx.body = {"code":200,"message":"ok",data:jsondata[0]}
-//     }catch (err) {
-//         ctx.body = {"code":500,"message":err.toString(),data:[]}
-//     }
-// })
+
 // 获取所有评论信息
 router.get('/personal/allAssessment',async (ctx,next)=>{
     try{
@@ -61,6 +53,16 @@ router.get('/personal/allAssessment',async (ctx,next)=>{
 router.get('/allinfo',async (ctx,next)=>{
     try{
         let jsondata = await assessmentDAO.getallinfo();
+        ctx.body = {"code":200,"message":"ok",data:jsondata}
+    }catch (err) {
+        ctx.body = {"code":500,"message":err.toString(),data:[]}
+    }
+})
+//用户通过hId进行判断三表查询获取所有评价信息
+router.get('/allassment/:hId',async (ctx,next)=>{
+    try{
+        let jsondata =  await assessmentDAO.allassmentreply(ctx.params.hId);
+        console.log(jsondata)
         ctx.body = {"code":200,"message":"ok",data:jsondata}
     }catch (err) {
         ctx.body = {"code":500,"message":err.toString(),data:[]}

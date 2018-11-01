@@ -17,5 +17,20 @@ module.exports = {
         }catch (err) {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
-    }
+    },
+
+    addSave:async (ctx,next)=>{
+        let query = ctx.request.body;
+        let save = {};
+        save.sDate = query.sDate;
+        save.hId = query.hId;
+        save.uId= query.uId;
+        try{
+            let jsondata = await saveDAO.addSave(save);
+            ctx.body = {"code":200,"message":"ok",data:jsondata}
+        }catch (err) {
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
+    },
+
 }
