@@ -40,7 +40,8 @@ class Assessment {
     }
  //用户通过hId进行判断三表查询获取所有评价信息
     allassmentreply(hId){
-        return DAO('select assessment.*,user.uName,reply.rContent from assessment LEFT JOIN user on user.uId =assessment.uId  RIGHT JOIN reply on assessment.aId = reply.aId WHERE assessment.hId = ?',[hId]);
+        // return DAO('select assessment.*,user.uName,reply.rContent from assessment LEFT JOIN user on user.uId =assessment.uId  RIGHT JOIN reply on assessment.aId = reply.aId WHERE assessment.hId = ?',[hId]);
+        return DAO('select assessment.*,user.uName,uHeadPic from assessment LEFT JOIN user on user.uId =assessment.uId WHERE assessment.hId = ?',[hId]);
     }
 }
 module.exports = new Assessment();
