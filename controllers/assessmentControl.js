@@ -12,7 +12,26 @@ module.exports = {
                 console.log(files.aImages)
                 //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
                 console.log(fields);
-            if (files == {}) {}
+            if (files.aImages==undefined ) {
+                let assessment = {};
+                assessment.aId= fields.aId;
+                assessment.arrvialDate= fields.arrvialDate;
+                assessment.aContent = fields.aContent;
+                assessment.aDate = new Date();
+                assessment.aScore =fields.aScore;
+                assessment.uId = fields.uId
+                assessment.oId = fields.oId;
+                assessment.hId =fields.hId;
+                // assessment.aImages = ctx.request.aImages;
+                assessment.aCommend= fields.aCommend;
+                assessmentDAO.addAssessment(assessment);
+                try {
+                    console.log(ok)
+                    ctx.body = {"code": 200, "message": "ok", data: []}
+                } catch (err) {
+                    ctx.body = {"code": 500, "message": err.toString(), data: []}
+                }
+            }
             else {
                 var j = files.aImages.length
                 console.log(j)
