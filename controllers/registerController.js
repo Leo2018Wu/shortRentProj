@@ -178,16 +178,15 @@ module.exports = {
     },
     updateuName: async (ctx, next)=> {
         var nameInfo = {}
-        nameInfo.uName = ctx.request.body.uName;
         nameInfo.uId = ctx.request.body.uId;
-        // try {
-        let jsonData = await userDAO.updateuName(nameInfo);
-        //     ctx.body = {"code": 200, "message": '完善信息成功',data:jsonData};
-        // }
-        // catch (err) {
-        //     ctx.body = {"code": 500, "message": '执行失败', data: []}
-        // }
-        console.log(jsonData)
+        nameInfo.uName = ctx.request.body.uName;
+        try {
+        let dade = await userDAO.updateuName(nameInfo);
+            ctx.body = {"code": 200, "message": '完善信息成功',data:dade};
+        }
+        catch (err) {
+            ctx.body = {"code": 500, "message": '执行失败', data: []}
+        }
     },
     updateTureName: async (ctx, next)=> {
         var ture = {}

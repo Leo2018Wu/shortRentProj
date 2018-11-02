@@ -144,11 +144,10 @@ module.exports = {
         form.multiples = true;  //设置上传多文件
         form.keepExtensions = true;//保留扩展名
         form.parse(ctx.req, function (err, fields, files) {
-            console.log(files)
+            console.log(files.dImages)
             //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
             console.log(fields)
-            if (files == {}) {
-
+            if (files.dImages == "undefined") {
                 let diarys = {};
                 diarys.dId = fields.dId
                 diarys.arrvialDate = fields.arrvialDate
@@ -162,6 +161,7 @@ module.exports = {
                 diarys.dThumbs = fields.dThumbs
                 diarys.oId = fields.oId
                 diarysDAO.addDiarys(diarys);
+
 
                 // }
                 try {
