@@ -2,6 +2,15 @@
 const DAO = require('../model/DAO')
 
 class DB{
+    // 获取全部日记（管理员）
+    getAllDiarys(){
+        return DAO(' select * from diary',[]);
+    }
+    //推荐日记(管理员）
+    recommenddiary(rediary){
+        return DAO('update diary set recommend = ? where dId = ?',
+            [rediary.recommend,rediary.dId])
+    }
     //获取全部日记中推荐日记的方法
     getDiarys(id){
         return DAO(' select * from diary,`user`,house where house.hId = diary.hId and `user`.uId = diary.uId  and diary.recommend = ?',[id]);

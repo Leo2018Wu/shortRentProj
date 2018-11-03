@@ -12,6 +12,26 @@ router.post('/register',async (ctx,next)=>{
 router.post('/login',async (ctx,next)=>{
    await userController.userlogin(ctx,next)
 })
+//通过手机号返回用户的uId(管理员)
+router.get('/checkphone/:uPhone',async (ctx,next)=>{
+    try{
+        let jsondata = await userDAO.userlogin(ctx.params.uPhone);
+        console.log(jsondata)
+        ctx.body = {"code":200,"message":"ok",data:jsondata}
+    }catch (err) {
+        ctx.body = {"code":500,"message":err.toString(),data:[]}
+    }
+})
+//获取全部用户
+router.get('/getalluser',async (ctx,next)=>{
+    try{
+        let jsondata = await userDAO.getAllUser();
+        console.log(jsondata)
+        ctx.body = {"code":200,"message":"ok",data:jsondata}
+    }catch (err) {
+        ctx.body = {"code":500,"message":err.toString(),data:[]}
+    }
+})
 //匹配所有的手机号,看手机号是否存在
 router.get('/getallphone/:uPhone',async (ctx,next)=>{
     try{
@@ -32,11 +52,10 @@ router.post('/getuserinfo/:uPhone',async (ctx,next)=>{
         ctx.body = {"code":500,"message":err.toString(),data:[]}
     }
 })
+// 用户完善信息
 router.post('/perfect',async (ctx,next)=> {
     await userController.userperfect(ctx,next);
 })
-
-
 //用更改用户名
 router.post('/updateuName',async (ctx,next)=> {
     await userController.updateuName(ctx,next);

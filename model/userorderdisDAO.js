@@ -60,6 +60,10 @@ class DB {
         return DAO('update `user` set uHeadPic = ? where uId = ? ',
             [photo.uHeadPic,photo.uId]);
     }
+    // 获取所有用户信息（管理员）
+    getAllUser(){
+        return DAO('SELECT * FROM `user`',[]);
+    }
 
     //查询指定用户信息
     getUserInfo(id){

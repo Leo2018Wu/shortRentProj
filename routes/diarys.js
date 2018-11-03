@@ -6,6 +6,20 @@ var path = require('path')
 var mysql = require('mysql')
 //diarys根路由
 router.prefix('/diarys')
+// 查询所有日记(管理员)
+router.get('/alldiarys',async (ctx,next)=>{
+    try{
+        let jsondata = await diarysDAO.getAllDiarys();
+        ctx.body = {"code":200,"message":"ok",data:jsondata}
+    }catch (err) {
+        ctx.body = {"code":500,"message":err.toString(),data:[]}
+    }
+})
+//推荐评价(管理员)
+router.post('/recommenddiary',async (ctx,next)=>{
+    await diarysCtroller.recommenddiary(ctx,next)
+    // console.log('修改成功')
+})
 //推荐的日记
 router.get('/:recommend',async (ctx,next)=>{
     await diarysCtroller.getDiarys(ctx,next)

@@ -2,9 +2,9 @@
 const DAO = require('../model/DAO')
 
 class DB{
-    //管理员登录
-   adminlogin() {
-        return DAO('select adminName,adminPwd from admin',[]);
+    //管理员登录(管理员)
+    adminlogin(adminName) {
+        return DAO('select adminName,adminPwd from admin where adminName = ?',[adminName]);
     }
 
     //房源操作
