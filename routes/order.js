@@ -29,6 +29,28 @@ router.get('/getoneorder/:oId',async (ctx,next)=>{
         ctx.body = {"code": 500, "message": '执行失败', data: []}
     }
 })
+//管理员获取所有订单
+router.get('/admingetallorder',async (ctx,next)=>{
+    try {
+        let jasondata = await orderDAO.getAllOrder(ctx.params.uId);
+        ctx.body = {"code": 200, "message":'ok',data:jasondata}
+        return;
+    }
+    catch (err) {
+        ctx.body = {"code": 500, "message": '执行失败', data: []}
+    }
+})
+//用户获取所有订单(管理员)
+router.post('/getallorder/:uId',async (ctx,next)=>{
+    try {
+        let jasondata = await orderDAO.getOrders(ctx.params.uId);
+        ctx.body = {"code": 200, "message":'ok',data:jasondata}
+        return;
+    }
+    catch (err) {
+        ctx.body = {"code": 500, "message": '执行失败', data: []}
+    }
+})
 //用户获取所有订单
 // router.get('/getallorder/:uId',async (ctx,next)=>{
 //     await adminCtroller.updateorder(ctx,next)

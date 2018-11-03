@@ -40,7 +40,7 @@ router.get('/details/assessment/:hId',async (ctx,next)=>{
         }
     })
 
-// 获取所有评论信息
+// 获取所有评论信息(管理员)
 router.get('/personal/allAssessment',async (ctx,next)=>{
     try{
         let jsondata = await assessmentDAO.getallAssessment();
@@ -49,6 +49,12 @@ router.get('/personal/allAssessment',async (ctx,next)=>{
         ctx.body = {"code":500,"message":err.toString(),data:[]}
     }
 })
+//推荐评价(管理员)
+router.post('/recommendassessment',async (ctx,next)=>{
+    await assessmentControl.recommendAssessment(ctx,next)
+    // console.log('修改成功')
+})
+
 //获取用户，评论，回复所有信息
 router.get('/allinfo',async (ctx,next)=>{
     try{

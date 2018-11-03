@@ -5,6 +5,16 @@ var fs =require('fs');
 var path = require('path');
 const crypto = require('crypto');
 module.exports = {
+    //推荐日记（管理员）
+    recommenddiary: async (ctx,next)=>{
+        let query =ctx.request.body;
+        let rediary ={};
+        rediary.dId= query.dId;
+        rediary.recommend= query.recommend;
+        let jsondata = await diarysDAO.recommenddiary(rediary);
+        ctx.set('content-type', 'application/json');
+        ctx.body = {"code": 200, "message": "OK", data: jsondata}
+    },
     //推荐的日记
     getDiarys:async (ctx,next) => {
         try{
@@ -45,35 +55,6 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
-    addDiarys1:async (ctx,next) => {
-        //1.收集数据
-        // let jsonData = await adminDAO.getOneOrders(ctx.params.oId)
-        // console.log(jsonData[0].hId)
-        // console.log(jsonData[0].uId)
-        // console.log(jsonData[0].arrvialDate)
-        let diarys = { };
-
-        diarys.dId = ctx.request.body.dId
-        diarys.arrvialDate = ctx.request.body.arrvialDate
-        diarys.dContent = ctx.request.body.dContent
-        diarys.dDate = new Date()
-        diarys.recommend = ctx.request.body.recommend
-        diarys.uId = ctx.request.body.uId
-        diarys.hId = ctx.request.body.hId
-        diarys.dTitle = ctx.request.body.dTitle
-        diarys.dThumbs= ctx.request.body.dThumbs
-        diarys.dImages= ctx.request.body.dImages
-        diarys.oId= ctx.request.body.oId
-        console.log(diarys);
-        try{
-            //2.调用用户数据访问对象的添加方法
-            let jsonDatas = await diarysDAO.addDiarys(diarys)
-            //3.反馈结果
-            ctx.body = {"code":200,"message":"ok",data:jsonDatas}
-        }catch(err){
-            ctx.body = {"code":500,"message":err.toString(),data:[]}
-        }
-    },
     deleteDiarys:async (ctx,next) => {
         //1.收集数据
         let id =ctx.params.dId ;
@@ -105,7 +86,7 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
-
+// 添加日记评论
     addAssessments:async (ctx,next) => {
         //1.收集数据
         let jsonData = await diarysDAO.getDDiarys(ctx.params.dId)
@@ -124,7 +105,7 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
-
+// 删除日记评论
     deleteAssessments:async (ctx,next) => {
         //1.收集数据
         let id =ctx.params.daId
@@ -137,7 +118,7 @@ module.exports = {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
     },
-
+// 添加日记
     addDiarys: async (ctx, next) => {
         var form = new formidable.IncomingForm();
         form.uploadDir = '../public/diaryImages';   //设置文件存放路径
@@ -247,5 +228,4 @@ module.exports = {
 
         })
     },
-
 }

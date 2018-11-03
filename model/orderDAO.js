@@ -11,6 +11,10 @@ class DB{
         return DAO('call proc_addorder(?,?,?,?,?,?,?,?,?)',
             [orderoccupant.arrvialDate,orderoccupant.leaveDate,orderoccupant.hPrice,orderoccupant.oStatus,orderoccupant.uId,orderoccupant.hId,orderoccupant.occName,orderoccupant.occCordId,orderoccupant.occPhone])
     }
+    // 获取所有的订单信息（管理员）
+    getAllOrder(){
+        return DAO('select * from `order`',[]);
+    }
     //获取指定编号的订单的详情
     getOneorder(oId){
         return DAO('SELECT * FROM `order` where oId = ?',[oId]);
@@ -59,7 +63,7 @@ class DB{
     //根据订单编号多表查询生成的订单
     getOrderDetail(oId){
         return DAO('SELECT house.hName,house.hLocation,`order`.arrvialDate,`order`.leaveDate,occupant.occName,' +
-            'occupant.occCordId,occupant.occPhone,`user`.uTrueName,`user`.uPhone,house.hPrice FROM `order`,`user`,house,' +
+            'occupant.occCordId,occupant.occPhone,occupant.occId,`user`.uName,`user`.uPhone,house.hPrice FROM `order`,`user`,house,' +
             'occupant,order_has_occupant WHERE `order`.uId = `user`.uId AND `order`.hId = house.hId AND' +
             ' `order`.oId = order_has_occupant.oId AND `user`.uId = occupant.uId AND occupant.occId = order_has_occupant.occId ' +
             'AND `order`.oId = ?',[oId]);

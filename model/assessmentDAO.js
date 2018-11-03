@@ -13,6 +13,11 @@ class Assessment {
     getallAssessment(){
         return DAO('select * from assessment');
     }
+    //推荐评价(管理员）
+    recommendAssessment(reassessment){
+        return DAO('update assessment set recommend = ? where aId = ?',
+            [reassessment.recommend,reassessment.aId])
+    }
 //获取用户，评论，回复所有信息
     getallinfo(){
         return DAO('select * from user INNER JOIN assessment on assessment.uId = user.uId INNER JOIN reply on assessment.aId = reply.aId');
@@ -40,7 +45,6 @@ class Assessment {
     }
  //用户通过hId进行判断三表查询获取所有评价信息
     allassmentreply(hId){
-        // return DAO('select assessment.*,user.uName,reply.rContent from assessment LEFT JOIN user on user.uId =assessment.uId  RIGHT JOIN reply on assessment.aId = reply.aId WHERE assessment.hId = ?',[hId]);
         return DAO('select assessment.*,user.uName,uHeadPic from assessment LEFT JOIN user on user.uId =assessment.uId WHERE assessment.hId = ?',[hId]);
     }
 }

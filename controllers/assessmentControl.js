@@ -9,9 +9,9 @@ module.exports = {
         form.multiples = true;  //设置上传多文件
         form.keepExtensions = true;//保留扩展名
         form.parse(ctx.req, function (err, fields, files) {
-                console.log(files.aImages)
-                //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
-                console.log(fields);
+            console.log(files.aImages)
+            //根据files.filename.name获取上传文件名，执行后续写入数据库的操作
+            console.log(fields);
             if (files.aImages==undefined ) {
                 let assessment = {};
                 assessment.aId= fields.aId;
@@ -103,6 +103,7 @@ module.exports = {
         })
     },
 
+
     delAssessment:async (ctx,next)=>{
         //1，收集数据
         try{
@@ -111,5 +112,15 @@ module.exports = {
         }catch (err) {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
-    }
+    },
+    //推荐评价（管理员）
+    recommendAssessment: async (ctx,next)=>{
+        let query =ctx.request.body;
+        let reassessment ={};
+        reassessment.aId= query.aId;
+        reassessment.recommend= query.recommend;
+        let jsondata = await assessmentDAO.recommendAssessment(reassessment);
+        ctx.set('content-type', 'application/json');
+        ctx.body = {"code": 200, "message": "OK", data: jsondata}
+    },
 };

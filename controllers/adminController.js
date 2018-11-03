@@ -5,18 +5,26 @@ var path = require('path')
 module.exports = {
     adminlogin: async (ctx, next) => {
         let query = ctx.request.body;
+        let admin = {};
+        admin.adminName = query.adminName;
+        admin.adminPwd = query.adminPwd;
         try {
-            let login = await adminDAO.adminlogin();
-            for(let i=0;i<login.length;i++){
-                if(query.adminPwd == login[i].adminPwd && query.adminName == login[i].adminName) {
-                    ctx.body = {'code': 200, 'message': '登录成功', data:query};
-                }else{
-                    ctx.body = {"code": 500, "message": '登录失败', data: []}
+            let jsondata = await adminDAO.adminlogin(admin.adminName);
+            console.log(jsondata);
+            if (jsondata.length == 0) {
+                ctx.body = {
+                    code: 500,
+                    message: '该管理员不存在'
                 }
+            } else if (jsondata[0].adminPwd == admin.adminPwd) {
+                ctx.body = {"code": 200, "message": "恭喜哦，登录成功啦啦！", data: jsondata[0]}
+            } else {
+                ctx.body = {"code": 403, "message": '管理员不存在或密码错误', data: []}
             }
         }
-        catch (err) {
-            ctx.body = {"code": 500, "message": '执行失败', data: []}
+        catch
+            (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
     addhouses: async (ctx, next) => {
