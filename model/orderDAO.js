@@ -59,7 +59,7 @@ class DB{
     //根据订单编号多表查询生成的订单
     getOrderDetail(oId){
         return DAO('SELECT house.hName,house.hLocation,`order`.arrvialDate,`order`.leaveDate,occupant.occName,' +
-            'occupant.occCordId,occupant.occPhone,`user`.uTrueName,`user`.uPhone,house.hPrice FROM `order`,`user`,house,' +
+            'occupant.occCordId,occupant.occPhone,occupant.occId,`user`.uName,`user`.uPhone,house.hPrice FROM `order`,`user`,house,' +
             'occupant,order_has_occupant WHERE `order`.uId = `user`.uId AND `order`.hId = house.hId AND' +
             ' `order`.oId = order_has_occupant.oId AND `user`.uId = occupant.uId AND occupant.occId = order_has_occupant.occId ' +
             'AND `order`.oId = ?',[oId]);
