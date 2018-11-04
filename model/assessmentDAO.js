@@ -43,7 +43,7 @@ class Assessment {
     delAssessment(id){
         return DAO('call proc_del(?);',[id]);
     }
- //用户通过hId进行判断三表查询获取所有评价信息
+ //用户通过hId进行判断查询获取所有评价信息
     allassmentreply(hId){
         return DAO('select assessment.*,user.uName,uHeadPic from assessment LEFT JOIN user on user.uId =assessment.uId WHERE assessment.hId = ?',[hId]);
     }
