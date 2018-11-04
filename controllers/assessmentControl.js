@@ -22,7 +22,7 @@ module.exports = {
                 assessment.uId = fields.uId
                 assessment.oId = fields.oId;
                 assessment.hId =fields.hId;
-                // assessment.aImages = ctx.request.aImages;
+                assessment.aImages = "http://localhost:3000/assessmentImages/4.jpg,";
                 assessment.aCommend= fields.aCommend;
                 assessmentDAO.addAssessment(assessment);
                 try {
