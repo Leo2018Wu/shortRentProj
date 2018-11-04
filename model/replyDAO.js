@@ -18,6 +18,11 @@ class Reply {
     delReply(id){
         return DAO('delete from reply where rId = ?',[id]);
     }
+    //获取某个房源的全部回复信息
+    onehouseReply(hId){
+        return DAO('select reply.* from reply LEFT JOIN assessment on assessment.aId = reply.aId WHERE hId = ?',[hId]);
+    }
+
 }
 
 module.exports = new Reply();

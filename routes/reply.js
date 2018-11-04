@@ -27,5 +27,16 @@ router.get('/details/reply/:aId',async (ctx,next)=>{
 //删除回复：在房源详情页面里面删除回复
     router.get('/details/delReply/:rId',async (ctx,next)=>{
         await replyControl.delReply(ctx,next)
+    }),
+    //获取某个房源的全部回复信息
+    router.get('/details/onehouseReply/:hId',async (ctx,next)=>{
+        try{
+            let jsondata = await replyDAO.onehouseReply(ctx.params.hId);
+            ctx.body = {"code":200,"message":"ok",data:jsondata}
+        }catch (err) {
+            ctx.body = {"code":500,"message":err.toString(),data:[]}
+        }
     })
+
+
 module.exports = router;
