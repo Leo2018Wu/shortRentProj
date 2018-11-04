@@ -212,7 +212,7 @@ module.exports = {
                     diarys.uId = fields.uId
                     diarys.hId = fields.hId
                     diarys.dTitle = fields.dTitle
-                    diarys.dImages = "http://localhost:3000/assessmentImages/4.jpg,";
+                    diarys.dImages = "http://localhost:3000/assessmentImages/house.png,";
                     diarys.dThumbs = fields.dThumbs
                     diarys.oId = fields.oId
                     diarysDAO.addDiarys(diarys);
