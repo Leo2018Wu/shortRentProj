@@ -40,4 +40,21 @@ module.exports = {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
     },
+    addOccOid: async (ctx, next) => {
+        //1.收集数据
+        let occ = {};
+        occ.oId =ctx.request.body.oId
+        occ.occId = ctx.request.body.occId
+        console.log(occ)
+        //2.调用用户数据访问对象的添加方法
+
+        try {
+            //3.反馈结果
+            await occupantDAO.addOccOid(occ)
+            ctx.body = {"code": 200, "message": "ok", data: []}
+        } catch (err) {
+            ctx.body = {"code": 500, "message": err.toString(), data: []}
+        }
+    },
+
 }
