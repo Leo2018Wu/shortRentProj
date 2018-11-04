@@ -15,5 +15,14 @@ class DB{
         return DAO('insert into occupant values(?,?,?,?,?)',
             [occupant.occId,occupant.occName,occupant.occCordId,occupant.occPhone,occupant.uId])
     }
+    //添加订单对应的入住人
+    addOccOid(occ){
+        return DAO('insert into order_has_occupant(oId,occId) VALUES (?,?)',
+            [occ.oId,occ.occId])
+    }
+    //获取当前数据库里面的最大的occId接口
+    getMaxOccId(){
+        return DAO('select * from occupant order by occId desc limit 1',[]);
+    }
 }
 module.exports = new DB();
