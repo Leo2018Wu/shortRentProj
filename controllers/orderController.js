@@ -14,6 +14,7 @@ module.exports = {
         orderoccupant.occName= query.occName;
         orderoccupant.occCordId= query.occCordId;
         orderoccupant.occPhone= query.occPhone;
+        orderoccupant.occStatus= query.occStatus;
         try {
             await orderDAO.addOrder(orderoccupant);
             ctx.body = {"code": 200, "message":'ok',data:orderoccupant}
