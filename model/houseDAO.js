@@ -8,7 +8,7 @@ class DB{
     }
     //按照评分高低显示房屋方法
     scoreOrderHouse(){
-        return DAO('select hId,hPic1,hName,hPrice,hLocation from house order by hScore',[]);
+        return DAO('select * from house order by hScore',[]);
     }
     //按照价格高低显示房屋方法
     priceOrderHouse(){
