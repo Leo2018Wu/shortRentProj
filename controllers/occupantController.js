@@ -7,7 +7,7 @@ module.exports = {
         occupant.occName = ctx.request.body.occName
         occupant.occCordId = ctx.request.body.occCordId
         occupant.occPhone = ctx.request.body.occPhone
-        // occupant.disId = ctx.request.body.disId
+        occupant.occStatus = ctx.request.body.occStatus
         occupant.uId = ctx.request.body.uId
             console.log(occupant)
             //2.调用用户数据访问对象的添加方法
@@ -39,6 +39,15 @@ module.exports = {
         } catch (err) {
             ctx.body = {"code": 500, "message": err.toString(), data: []}
         }
+    },
+    updateOccupant: async (ctx,next)=>{
+        let query =ctx.request.body;
+        let occupant ={};
+        occupant.occId= query.occId;
+        occupant.occStatus= query.occStatus;
+        let jsondata = await occupantDAO.updateOccupant(occupant);
+        ctx.set('content-type', 'application/json');
+        ctx.body = {"code": 200, "message": "OK", data: jsondata}
     },
     addOccOid: async (ctx, next) => {
         //1.收集数据

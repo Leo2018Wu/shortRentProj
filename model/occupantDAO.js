@@ -6,14 +6,19 @@ class DB{
     deleteOccupant(id){
         return DAO('delete from occupant where occId=?',[id])
         }
+    //修改入住人状态
+    updateOccupant(occupant){
+        return DAO('update occupant set occStatus = ? where occId = ?',
+            [occupant.occStatus,occupant.occId])
+    }
     //根据用户编号查询用户添加的入住人
     getOccupant(id){
-        return DAO('select * from occupant where uId=?',[id])
+        return DAO('select * from occupant where occStatus = 1 and uId=?',[id])
     }
     //添加入住人
     addOccupant(occupant){
-        return DAO('insert into occupant values(?,?,?,?,?)',
-            [occupant.occId,occupant.occName,occupant.occCordId,occupant.occPhone,occupant.uId])
+        return DAO('insert into occupant values(?,?,?,?,?,?)',
+            [occupant.occId,occupant.occName,occupant.occCordId,occupant.occPhone,occupant.occStatus,occupant.uId])
     }
     //添加订单对应的入住人
     addOccOid(occ){

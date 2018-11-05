@@ -22,6 +22,10 @@ class Reply {
     onehouseReply(hId){
         return DAO('select reply.* from reply LEFT JOIN assessment on assessment.aId = reply.aId WHERE hId = ?',[hId]);
     }
+    //获取某个用户的全部回复信息
+    oneuserReply(uId){
+        return DAO('select reply.rContent,assessment.* from reply RIGHT outer JOIN assessment on assessment.aId = reply.aId WHERE uId = ? order by aDate desc',[uId]);
+    }
 
 }
 
