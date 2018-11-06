@@ -33,5 +33,10 @@ router.get('/getMaxOccId',async (ctx,next)=>{
         ctx.body = {"code": 500, "message": '执行失败', data: []}
     }
 })
+//根据入住人编号修改状态
+router.post('/updateOccupant',async (ctx,next)=>{
+    await occupantController.updateOccupant(ctx,next)
+    // console.log('修改成功')
+})
 
 module.exports = router

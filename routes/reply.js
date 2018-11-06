@@ -36,7 +36,16 @@ router.get('/details/reply/:aId',async (ctx,next)=>{
         }catch (err) {
             ctx.body = {"code":500,"message":err.toString(),data:[]}
         }
-    })
+    }),
+//获取某个用户的全部回复信息
+router.get('/details/oneuserReply/:uId',async (ctx,next)=>{
+    try{
+        let jsondata = await replyDAO.oneuserReply(ctx.params.uId);
+        ctx.body = {"code":200,"message":"ok",data:jsondata}
+    }catch (err) {
+        ctx.body = {"code":500,"message":err.toString(),data:[]}
+    }
+}),
 
 
 module.exports = router;
