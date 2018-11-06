@@ -105,4 +105,5 @@ module.exports = {
            ctx.body = {"code":500,"message":err.toString(),data:[]}
        }
     },
+
 }

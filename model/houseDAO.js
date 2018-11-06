@@ -51,5 +51,13 @@ class DB{
     // facilityHouse(facil){
     //     return DAO('select hId,hPic1,hName,hPrice,hLocation from house where json_extract\< hfacility,\'$.?\'\>=1',[facil])
     // }
+//    8,获取所有房源信息
+    getallHouse(){
+        return DAO("SELECT * FROM `house`")
+    }
+//    9,改变指定房源状态
+    deleteHouse(hId){
+        return DAO("UPDATE house set hState = ? where hId = ?",['-1',hId])
+    }
 }
 module.exports = new DB();

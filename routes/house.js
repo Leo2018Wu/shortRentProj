@@ -48,4 +48,23 @@ router.get('/priceHouse/:hPrice',async(ctx,next)=>{
 router.post('/facilityHouse',async(ctx,next)=>{
     await houseController.facilityHouse((ctx,next))
 })
+//获取全部房源信息
+router.get('/allHouse',async(ctx,next)=>{
+
+    try{
+        let jsondata = await houseDAO.getallHouse(ctx,next);
+        ctx.body = {"code":200,"message":"ok",data:jsondata}
+    }catch (err) {
+        ctx.body = {"code":500,"message":err.toString(),data:[]}
+    }
+})
+//更改房源状态
+router.get('/deleteHouse/:hId',async(ctx,next)=>{
+    try{
+        let jsondata = await houseDAO.deleteHouse(ctx.params.hId,next);
+        ctx.body = {"code":200,"message":"ok",data:jsondata}
+    }catch (err) {
+        ctx.body = {"code":500,"message":err.toString(),data:[]}
+    }
+})
 module.exports = router;
