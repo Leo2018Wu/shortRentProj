@@ -22,7 +22,7 @@ module.exports = {
                 assessment.uId = fields.uId
                 assessment.oId = fields.oId;
                 assessment.hId =fields.hId;
-                assessment.aImages = "http://localhost:3000/assessmentImages/house.png,";
+                assessment.aImages = "http://10.40.4.8:3000/assessmentImages/house.png,";
                 assessment.aCommend= fields.aCommend;
                 assessmentDAO.addAssessment(assessment);
                 try {
@@ -45,7 +45,7 @@ module.exports = {
                         let srcNew = path.join(__dirname, files.aImages[i].path);
                         // 改成你想要的名字
                         let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
-                        let stt = `http://localhost:3000/assessmentImages/${destName}`;
+                        let stt = `http://10.40.4.8:3000/assessmentImages/${destName}`;
                         let name = path.join(path.parse(srcNew).dir, destName);
                         fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
                         assessment.aImages = assessment.aImages+stt + ','
@@ -76,7 +76,7 @@ module.exports = {
                     let srcNew = path.join(__dirname, files.aImages.path);
                     // 改成你想要的名字
                     let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
-                    let stt = `http://localhost:3000/assessmentImages/${destName}`;
+                    let stt = `http://10.40.4.8:3000/assessmentImages/${destName}`;
                     let name = path.join(path.parse(srcNew).dir, destName);
                     fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
                     assessment.aImages =stt + ','

@@ -44,7 +44,7 @@ app.use(async (ctx, next) => {
 
 app.use(cors({
     origin: function (ctx) {
-        return 'http://localhost:8080'; //这样就能只允许 http://localhost:63342 这个域名的请求了
+        return 'http://10.40.4.8:8080'; //这样就能只允许 http://10.40.4.8:63342 这个域名的请求了
     },
     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
     maxAge: 5,

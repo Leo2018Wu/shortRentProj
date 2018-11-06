@@ -168,7 +168,7 @@ module.exports = {
                         let srcNew = path.join(__dirname, files.dImages[i].path);
                         // 改成你想要的名字
                         let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
-                        let stt = `http://localhost:3000/diaryImages/${destName}`;
+                        let stt = `http://10.40.4.8:3000/diaryImages/${destName}`;
                         let name = path.join(path.parse(srcNew).dir, destName);
                         fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
                         diarys.dImages = diarys.dImages + stt + ','
@@ -200,7 +200,7 @@ module.exports = {
                     let srcNew = path.join(__dirname, files.dImages.path);
                     // 改成你想要的名字
                     let destName = `${path.basename(fileName, path.extname(fileName))}${path.extname(fileName)}`;
-                    let stt = `http://localhost:3000/diaryImages/${destName}`;
+                    let stt = `http://10.40.4.8:3000/diaryImages/${destName}`;
                     let name = path.join(path.parse(srcNew).dir, destName);
                     fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
                     diarys.dImages = stt + ','
@@ -212,7 +212,7 @@ module.exports = {
                     diarys.uId = fields.uId
                     diarys.hId = fields.hId
                     diarys.dTitle = fields.dTitle
-                    diarys.dImages = "http://localhost:3000/assessmentImages/house.png,";
+                    diarys.dImages = "http://10.40.4.8:3000/assessmentImages/house.png,";
                     diarys.dThumbs = fields.dThumbs
                     diarys.oId = fields.oId
                     diarysDAO.addDiarys(diarys);

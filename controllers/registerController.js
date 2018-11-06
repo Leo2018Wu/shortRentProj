@@ -76,7 +76,7 @@ module.exports = {
                 console.log(destName);
                 let name = path.join(path.parse(srcNew).dir, destName);
                 console.log(name);
-                let stt = `http://localhost:3000/Headuploadfile/${destName}`;
+                let stt = `http://10.40.4.8:3000/Headuploadfile/${destName}`;
                 console.log(stt);
                 fs.renameSync(srcNew, path.join(path.parse(srcNew).dir, destName));
                 let photo = {};
